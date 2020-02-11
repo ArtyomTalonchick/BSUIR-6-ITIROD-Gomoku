@@ -1,0 +1,32 @@
+form.search-header-container {
+  display: flex;
+  justify-content: space-between;
+
+  div.input-container{
+    display: inline-flex;
+    justify-content: space-between;
+    flex-grow: 1;//
+    margin-right: 10px;
+    min-width: 0;
+    max-width: 900px;
+    height: 26px;
+    border: 1px #7a7a7a solid;
+    border-radius: 13px;
+
+    img {
+      height: 20px;
+      margin: 3px 0 3px 10px;
+      opacity: 50%;
+    }
+
+    input{
+      min-width: 0;
+      height: 16px;
+      flex-grow: 1;
+      margin: 5px;
+      background: #ffffff;
+      border: none;
+    }
+  }
+
+}

@@ -1,0 +1,41 @@
+div.search-preview-container {
+  display: flex;
+  background: #ffffff;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px #eeeeee solid;
+  border-radius: 10px;
+
+  img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  div.info-block {
+    width: 100%;
+  }
+
+  span {
+    display: block;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @media (min-width: 600px) {
+    button {
+      float: right;
+    }
+  }
+
+  @media (max-width: 600px) {
+    div.info-block {
+      text-align: center;
+    }
+  }
+}
