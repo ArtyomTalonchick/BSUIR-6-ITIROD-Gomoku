@@ -3,7 +3,7 @@
 ##### Basic functions:
 - Authentication
 - User profile: nickname, avatar change
-- User Game
+- User search
 - Invitation notification to the game (with the option to agree or refuse)
 - Game between two users
 
