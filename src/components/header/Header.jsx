@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Header.scss';
+import {Routes} from '../../constants/roures';
 import HeaderButton from './button/HeaderButton';
 
 export default class Header extends React.Component {
@@ -9,10 +10,10 @@ export default class Header extends React.Component {
         return (
             <div className='header-container'>
                 <div className='buttons-container'>
-                    <HeaderButton pressed={true}>
+                    <HeaderButton route={Routes.search}>
                         Search
                     </HeaderButton>
-                    <HeaderButton>
+                    <HeaderButton route={Routes.profile}>
                         My Profile
                     </HeaderButton>
                     <HeaderButton>
