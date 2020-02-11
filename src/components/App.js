@@ -7,6 +7,7 @@ import Header from './header/Header';
 import Profile from './profile/Profile';
 import Search from './search/Search';
 import Game from './game/Game';
+import PageBlank from './pageBlank/PageBlank';
 
 export default class App extends React.Component {
 
@@ -15,11 +16,13 @@ export default class App extends React.Component {
             <div className='app-container'>
                 <BrowserRouter>
                     <Header/>
-                    <Switch>
-                        <Route path={Routes.profile} component={Profile}/>
-                        <Route path={Routes.search} component={Search}/>
-                        <Route path={Routes.game} component={Game}/>
-                    </Switch>
+                    <PageBlank>
+                        <Switch>
+                            <Route path={Routes.profile} component={Profile}/>
+                            <Route path={Routes.search} component={Search}/>
+                            <Route path={Routes.game} component={Game}/>
+                        </Switch>
+                    </PageBlank>
                 </BrowserRouter>
             </div>
         );
