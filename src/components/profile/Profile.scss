@@ -1,3 +1,48 @@
 div.profile-container {
+  display: flex;
+  justify-content: space-evenly;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+  }
+
+  div.image-block {
+    img {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 250px;
+      height: 250px;
+      border-radius: 10px;
+    }
+  }
+
+  div.info-block {
+    margin: 0 auto;
+
+    label {
+      display: block;
+      margin: 20px 0;
+
+      span {
+        margin-right: auto;
+      }
+
+      input {
+        background: #ffffff;
+        height: 20px;
+        padding: 3px 3px 3px 10px;
+        border: 1px #000000 solid;
+        border-radius: 0;
+        margin-left: 10px;
+        float: right;
+      }
+    }
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+  }
+
 
 }
