@@ -2,23 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09f76adf-e269-4726-ba51-21a30ef8498c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gomoku.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/header/Header.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/header/Header.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/header/button/HeaderButton.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/header/button/HeaderButton.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+    </list>
+    <list id="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" name="ignore" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +24,28 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/.idea/workspace.xml">
+      <ranges>
+        <range start1="4" end1="21" start2="4" end2="18" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="29" end1="29" start2="26" end2="48" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="42" end1="43" start2="61" end2="62" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="51" end1="51" start2="70" end2="73" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="52" end1="52" start2="74" end2="76" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="76" end1="76" start2="100" end2="101" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="80" end1="81" start2="105" end2="113" changelist="09f76adf-e269-4726-ba51-21a30ef8498c" />
+        <range start1="82" end1="82" start2="114" end2="115" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="98" end1="98" start2="131" end2="135" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="103" end1="103" start2="140" end2="144" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="107" end1="108" start2="148" end2="157" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="110" end1="112" start2="159" end2="161" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="114" end1="116" start2="163" end2="165" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="118" end1="120" start2="167" end2="169" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+        <range start1="122" end1="123" start2="171" end2="180" changelist="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="1XcESercfF2TeSzINgij2WEBGyA" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -40,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/header/button" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -49,7 +68,12 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/header/button" />
+      <recent name="$PROJECT_DIR$/src/components/header" />
       <recent name="$PROJECT_DIR$/public" />
     </key>
   </component>
@@ -74,11 +98,19 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="09f76adf-e269-4726-ba51-21a30ef8498c" name="Default Changelist" comment="" />
+      <changelist id="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" name="ignore" comment="" />
       <created>1581336984142</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581336984142</updated>
-      <workItem from="1581336986065" duration="2301000" />
+      <workItem from="1581336986065" duration="5514000" />
+    </task>
+    <task id="LOCAL-00001" summary="Init project">
+      <created>1581343839358</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581343839358</updated>
     </task>
     <servers />
   </component>

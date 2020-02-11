@@ -1,0 +1,15 @@
+button.header-button-container {
+  background: #fffff5;
+  width: 100px;
+  height: 20px;
+  border: 0;
+  border-radius: 4px;
+  margin: 10px;
+  color: #232323;
+  font-size: 16px;
+
+  &.pressed {
+    border: 2px #aaaaaa solid;
+    font-weight: bold;
+  }
+}

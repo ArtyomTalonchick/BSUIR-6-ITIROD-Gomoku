@@ -1,0 +1,12 @@
+div.header-container {
+  height: 40px;
+  background: #eeeeee;
+
+  div.buttons-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 20%;
+    min-width: max-content;
+  }
+}
