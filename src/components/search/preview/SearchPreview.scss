@@ -12,6 +12,7 @@ div.search-preview-container {
     height: 100px;
     width: 100px;
     border-radius: 100px;
+    margin-right: 20px;
 
     &:hover {
       cursor: pointer;
@@ -20,24 +21,30 @@ div.search-preview-container {
 
   div.info-block {
     width: 100%;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  span {
-    display: block;
-    &:hover {
-      cursor: pointer;
+
+    span {
+      margin-right: auto;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
-  }
 
-  @media (min-width: 600px) {
     button {
-      float: right;
+      width: max-content;
+    }
+
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      span {
+        margin-right: 0;
+      }
     }
   }
 
-  @media (max-width: 600px) {
-    div.info-block {
-      text-align: center;
-    }
-  }
 }
