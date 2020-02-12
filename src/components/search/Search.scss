@@ -1,6 +1,8 @@
+@import "../../constants/colors";
+
 div.search-container {
   hr {
     width: 100%;
-    color: #eeeeee;
+    color: $grayLight;
   }
 }

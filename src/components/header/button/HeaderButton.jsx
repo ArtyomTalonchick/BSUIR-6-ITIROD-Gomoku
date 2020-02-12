@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 import './HeaderButton.scss';
 
@@ -10,16 +10,15 @@ class HeaderButton extends React.Component {
         return 'header-button-container' + (pressed ? ' pressed' : '');
     };
 
-    onClick = () => this.props.history.push(this.props.route);
 
     render() {
         return (
-            <button
+            <Link
                 className={this.getClassName()}
-                onClick={this.onClick}
+                to={this.props.route}
             >
                 {this.props.children}
-            </button>
+            </Link>
         );
     }
 }

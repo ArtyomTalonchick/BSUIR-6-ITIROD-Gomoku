@@ -1,3 +1,5 @@
+@import "../../../constants/colors";
+
 form.search-header-container {
   display: flex;
   justify-content: space-between;
@@ -10,7 +12,7 @@ form.search-header-container {
     min-width: 0;
     max-width: 900px;
     height: 26px;
-    border: 1px #7a7a7a solid;
+    border: 1px $grayDark solid;
     border-radius: 13px;
 
     img {
@@ -24,7 +26,7 @@ form.search-header-container {
       height: 16px;
       flex-grow: 1;
       margin: 5px;
-      background: #ffffff;
+      background: $surface;
       border: none;
     }
   }

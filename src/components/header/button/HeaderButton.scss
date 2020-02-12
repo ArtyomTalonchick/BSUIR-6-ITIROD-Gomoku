@@ -1,15 +1,22 @@
-button.header-button-container {
-  background: #fffff5;
+@import "../../../constants/colors";
+
+a.header-button-container {
+  background: $primary;
   width: 100px;
-  height: 20px;
+  height: 40px;
+  line-height: 40px;
   border: 0;
-  border-radius: 4px;
-  margin: 10px;
-  color: #232323;
+  margin: 0 10px;
+  color: $textLight;
   font-size: 16px;
+  text-align: center;
 
   &.pressed {
-    border: 2px #aaaaaa solid;
+    border-bottom: 2px $black solid;
+    font-weight: bold;
+  }
+
+  &:hover {
     font-weight: bold;
   }
 }

@@ -1,3 +1,5 @@
+@import "../../constants/colors.scss";
+
 div.profile-container {
   display: flex;
   justify-content: space-evenly;
@@ -28,10 +30,10 @@ div.profile-container {
       }
 
       input {
-        background: #ffffff;
+        background: $surface;
         height: 20px;
         padding: 3px 3px 3px 10px;
-        border: 1px #000000 solid;
+        border: 1px $black solid;
         border-radius: 0;
         margin-left: 10px;
         float: right;

@@ -1,9 +1,11 @@
+@import "../../constants/colors.scss";
+
 div.page-blank-container {
-  background: #ffffff;
+  background: $surface;
   margin: 20px auto;
   width: 65%;
   min-width: 285px;
   padding: 20px;
-  border: 1px #eeeeee solid;
+  border: 1px $grayLight solid;
   border-radius: 17px;
 }

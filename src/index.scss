@@ -1,0 +1,29 @@
+@import "./constants/colors.scss";
+
+body {
+    margin: 0;
+}
+
+button {
+    background: $secondary;
+    min-width: 100px;
+    height: 26px;
+    border: 2px transparent solid;
+    border-radius: 13px;
+    color: $textDark;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        border: 2px $secondaryVariant solid;
+    }
+}
+
+*:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+}

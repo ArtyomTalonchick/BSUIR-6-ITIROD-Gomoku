@@ -1,9 +1,11 @@
+@import "../../../constants/colors";
+
 div.search-preview-container {
   display: flex;
-  background: #ffffff;
+  background: $surface;
   margin: 20px 0;
   padding: 20px;
-  border: 1px #eeeeee solid;
+  border: 1px $grayLight solid;
   border-radius: 10px;
 
   img {
