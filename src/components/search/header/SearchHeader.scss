@@ -5,27 +5,28 @@ form.search-header-container {
   justify-content: space-between;
 
   div.input-container{
+    flex-grow: 1;
     display: inline-flex;
     justify-content: space-between;
-    flex-grow: 1;//
+    align-items: center;
     margin-right: 10px;
     min-width: 0;
     max-width: 900px;
     height: 26px;
     border: 1px $grayDark solid;
     border-radius: 13px;
+    padding: 0 10px;
 
-    img {
+    i {
       height: 20px;
-      margin: 3px 0 3px 10px;
-      opacity: 50%;
+      color: $grayDark;
+      margin-right: 10px;
     }
 
     input{
       min-width: 0;
       height: 16px;
       flex-grow: 1;
-      margin: 5px;
       background: $surface;
       border: none;
     }

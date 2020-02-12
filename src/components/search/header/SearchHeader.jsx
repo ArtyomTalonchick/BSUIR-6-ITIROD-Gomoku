@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './SearchHeader.scss';
-import searchSvg from './../../../images/search.svg'
+import 'font-awesome/css/font-awesome.min.css';
 
 export default class SearchHeader extends React.Component {
 
@@ -24,7 +24,7 @@ export default class SearchHeader extends React.Component {
         return (
             <form className='search-header-container' onSubmit={this.onSubmit}>
                 <div className='input-container'>
-                    <img src={searchSvg}/>
+                    <i className='fa fa-search'/>
                     <input
                         className='search-input'
                         placeholder='Search...'
