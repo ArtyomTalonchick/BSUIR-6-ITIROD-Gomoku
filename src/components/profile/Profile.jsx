@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Profile.scss';
+import Form from '../form/Form';
 
 export default class Profile extends React.Component {
 
@@ -16,8 +17,21 @@ export default class Profile extends React.Component {
         }
     }
 
+    onSubmit = fields => {
+        console.log(fields);
+    };
+
     render() {
         const user = this.state.user;
+        const fields = {
+            name: {
+                label: 'Name',
+                value: user.name
+            },
+            field: {
+                label: 'Field Long Name'
+            },
+        };
         return (
             <div className='profile-container'>
                 <div className='image-block'>
@@ -26,20 +40,11 @@ export default class Profile extends React.Component {
                         Change
                     </button>
                 </div>
-                <div className='info-block'>
-                    <label>Name
-                        <input placeholder='Name...'/>
-                    </label>
-                    <label>Field1
-                        <input placeholder='Field1...'/>
-                    </label>
-                    <label>Field2Long
-                        <input placeholder='Field2Long...'/>
-                    </label>
-                    <button>
-                        Save
-                    </button>
-                </div>
+                <Form
+                    fields={fields}
+                    onSubmit={this.onSubmit}
+                    submitText='Save'
+                />
             </div>
         );
     }

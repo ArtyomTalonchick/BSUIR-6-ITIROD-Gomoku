@@ -6,6 +6,7 @@ div.profile-container {
 
   @media (max-width: 1000px) {
     flex-direction: column;
+    align-items: center;
   }
 
   div.image-block {
@@ -15,29 +16,6 @@ div.profile-container {
       width: 250px;
       height: 250px;
       border-radius: 10px;
-    }
-  }
-
-  div.info-block {
-    margin: 0 auto;
-
-    label {
-      display: block;
-      margin: 20px 0;
-
-      span {
-        margin-right: auto;
-      }
-
-      input {
-        background: $surface;
-        height: 20px;
-        padding: 3px 3px 3px 10px;
-        border: 1px $black solid;
-        border-radius: 0;
-        margin-left: 10px;
-        float: right;
-      }
     }
   }
 
