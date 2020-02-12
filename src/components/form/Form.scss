@@ -1,0 +1,40 @@
+@import "../../constants/colors.scss";
+
+div.form-container {
+
+  h2 {
+    margin: 0;
+    text-align: center;
+  }
+
+  label {
+    display: flex;
+    margin: 20px 0;
+
+    span {
+      margin-right: auto;
+    }
+
+    input {
+      background: $surface;
+      height: 20px;
+      padding: 3px 3px 3px 10px;
+      border: 1px $black solid;
+      border-radius: 0;
+      margin-left: 10px;
+    }
+  }
+
+  div.controls {
+    display: flex;
+
+    :first-child {
+      margin-right: auto;
+    }
+
+    button.single-control {
+      display: block;
+      margin-left: auto;
+    }
+  }
+}
