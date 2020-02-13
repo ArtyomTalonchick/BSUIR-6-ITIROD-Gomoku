@@ -6,6 +6,7 @@ import {Routes} from '../../constants/routes';
 import authenticationServices from '../../services/authenticationServices';
 
 const FIELDS = {
+    name: {label: 'Name'},
     email: {label: 'Email'},
     password: {label: 'Password', attributes: {type: 'password'}}
 };
@@ -15,7 +16,7 @@ class Registration extends React.Component {
     toLogin = () => this.props.history.push(Routes.login);
 
     onSubmit = fields =>
-        authenticationServices.signUp(fields.email.value, fields.password.value)
+        authenticationServices.signUp(fields.name.value, fields.email.value, fields.password.value)
             .then(() => this.props.history.push(Routes.profile))
             .catch(error => alert(error));
 
