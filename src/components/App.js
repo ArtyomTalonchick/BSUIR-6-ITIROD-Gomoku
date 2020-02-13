@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import './App.scss';
-import {Routes} from '../constants/roures';
+import {Routes} from '../constants/routes';
 import Header from './header/Header';
 import PageBlank from './pageBlank/PageBlank';
 import Profile from './profile/Profile';

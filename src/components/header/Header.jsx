@@ -1,13 +1,13 @@
 import React from 'react';
 
 import './Header.scss';
-import {Routes} from '../../constants/roures';
+import {Routes} from '../../constants/routes';
 import HeaderButton from './button/HeaderButton';
-import firebaseApp from '../../services/firebaseApp';
+import authenticationServices from '../../services/authenticationServices';
 
 export default class Header extends React.Component {
 
-    signOut = () => firebaseApp.auth().signOut();
+    signOut = () => authenticationServices.signOut();
 
     render() {
         return (

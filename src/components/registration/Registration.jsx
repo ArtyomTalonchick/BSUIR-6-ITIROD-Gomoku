@@ -2,8 +2,8 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 
 import Form from '../form/Form';
-import {Routes} from '../../constants/roures';
-import firebaseApp from '../../services/firebaseApp';
+import {Routes} from '../../constants/routes';
+import authenticationServices from '../../services/authenticationServices';
 
 const FIELDS = {
     email: {label: 'Email'},
@@ -15,9 +15,7 @@ class Registration extends React.Component {
     toLogin = () => this.props.history.push(Routes.login);
 
     onSubmit = fields =>
-        firebaseApp
-            .auth()
-            .createUserWithEmailAndPassword(fields.email.value, fields.password.value)
+        authenticationServices.signUp(fields.email.value, fields.password.value)
             .then(() => this.props.history.push(Routes.profile))
             .catch(error => alert(error));
 

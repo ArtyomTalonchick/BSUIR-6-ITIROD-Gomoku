@@ -2,7 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 
 import './SearchPreview.scss';
-import {Routes} from '../../../constants/roures';
+import {Routes} from '../../../constants/routes';
 
 class SearchPreview extends React.Component {
 
