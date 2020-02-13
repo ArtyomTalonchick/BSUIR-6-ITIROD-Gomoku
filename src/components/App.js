@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import './App.scss';
 import {Routes} from '../constants/roures';
@@ -11,40 +11,41 @@ import Game from './game/Game';
 import AuthenticationBlank from './authenticationBlank/AuthenticationBlank';
 import Login from './login/Login';
 import Registration from './registration/Registration';
+import {AuthContext} from './AuthProvider';
 
 export default class App extends React.Component {
 
     render() {
-        const user = true;
+        const {currentUser} = this.context;
         return (
             <div className='app-container'>
                 <BrowserRouter>
-                    {user
-                        ? (
-                            <>
-                                <Header/>
-                                <PageBlank>
-                                    <Switch>
-                                        <Route path={Routes.profile} component={Profile}/>
-                                        <Route path={Routes.search} component={Search}/>
-                                        <Route path={Routes.game} component={Game}/>
-                                    </Switch>
-                                </PageBlank>
-                            </>
-                        )
-                        : (
+                    {currentUser &&
+                    <>
+                        <Header/>
+                        <PageBlank>
                             <Switch>
-                                <AuthenticationBlank>
-                                    <Route path={Routes.login} component={Login}/>
-                                    <Route path={Routes.registration} component={Registration}/>
-                                </AuthenticationBlank>
+                                <Route path={Routes.profile} component={Profile}/>
+                                <Route path={Routes.search} component={Search}/>
+                                <Route path={Routes.game} component={Game}/>
+                                <Redirect to={Routes.profile}/>
                             </Switch>
-                        )
-
+                        </PageBlank>
+                    </>
                     }
-
+                    {currentUser === null &&
+                        <AuthenticationBlank>
+                            <Switch>
+                                <Route path={Routes.login} component={Login}/>
+                                <Route path={Routes.registration} component={Registration}/>
+                                <Redirect to={Routes.login}/>
+                            </Switch>
+                        </AuthenticationBlank>
+                    }
                 </BrowserRouter>
             </div>
         );
     }
 }
+
+App.contextType = AuthContext;

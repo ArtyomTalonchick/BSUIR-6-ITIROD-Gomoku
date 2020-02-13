@@ -36,12 +36,13 @@ export default class Form extends React.Component {
                     </>
                 )}
                 <form className='form' onSubmit={this.onSubmit}>
-                    {fields && Object.entries(fields).map(([fieldName, {label, value}]) => (
+                    {fields && Object.entries(fields).map(([fieldName, {label, value, attributes}]) => (
                         <label key={fieldName}>
                         <span>
                             {label}
                         </span>
                             <input
+                                {...attributes}
                                 onChange={this.onChange}
                                 value={value || ''}
                                 name={fieldName}

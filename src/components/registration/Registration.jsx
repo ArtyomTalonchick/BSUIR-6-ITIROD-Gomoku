@@ -3,23 +3,23 @@ import {withRouter} from 'react-router-dom';
 
 import Form from '../form/Form';
 import {Routes} from '../../constants/roures';
+import firebaseApp from '../../services/firebaseApp';
 
 const FIELDS = {
     email: {label: 'Email'},
-    password: {label: 'Password'}
+    password: {label: 'Password', attributes: {type: 'password'}}
 };
 
 class Registration extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     toLogin = () => this.props.history.push(Routes.login);
 
-    onSubmit = fields => {
-        console.log(fields);
-    };
+    onSubmit = fields =>
+        firebaseApp
+            .auth()
+            .createUserWithEmailAndPassword(fields.email.value, fields.password.value)
+            .then(() => this.props.history.push(Routes.profile))
+            .catch(error => alert(error));
 
     render() {
         return (

@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Search.scss';
 import SearchHeader from './header/SearchHeader';
-import SearchPreview from "./preview/SearchPreview";
+import SearchPreview from './preview/SearchPreview';
 
 export default class Search extends React.Component {
 

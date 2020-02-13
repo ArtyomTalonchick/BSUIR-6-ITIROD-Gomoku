@@ -2,23 +2,23 @@ import React from 'react';
 
 import Form from '../form/Form';
 import {Routes} from '../../constants/roures';
+import firebaseApp from '../../services/firebaseApp';
 
 const FIELDS = {
-    login: {label: 'Login'},
-    password: {label: 'Password'}
+    email: {label: 'Login'},
+    password: {label: 'Password', attributes: {type: 'password'}}
 };
 
 export default class Login extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     toRegistration = () => this.props.history.push(Routes.registration);
 
-    onSubmit = fields => {
-        console.log(fields);
-    };
+    onSubmit = fields =>
+        firebaseApp
+            .auth()
+            .signInWithEmailAndPassword(fields.email.value, fields.password.value)
+            .then(() => this.props.history.push(Routes.profile))
+            .catch(error => alert(error));
 
     render() {
         return (
