@@ -3,7 +3,7 @@ import firebaseApp from '../firebaseApp';
 const signUp = (email, password) =>
     firebaseApp
         .auth()
-        .signInWithEmailAndPassword(email, password);
+        .createUserWithEmailAndPassword(email, password);
 
 const signIn = (email, password) =>
     firebaseApp
