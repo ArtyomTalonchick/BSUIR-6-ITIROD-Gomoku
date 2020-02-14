@@ -1,5 +1,6 @@
 import React from 'react';
 import firebaseApp from '../firebaseApp';
+import userServices from '../services/userServices';
 
 export const AuthContext = React.createContext();
 
@@ -15,7 +16,10 @@ export default class AuthProvider extends React.Component {
         firebaseApp.auth().onAuthStateChanged(this.setCurrentUser);
     }
 
-    setCurrentUser = user => this.setState({currentUser: user});
+    setCurrentUser = user => {
+        userServices.getUserById(user.uid)
+            .then(dbUser => this.setState({currentUser: dbUser}));
+    };
 
     render() {
         return (

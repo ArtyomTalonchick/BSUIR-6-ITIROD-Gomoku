@@ -16,7 +16,7 @@ class HeaderButton extends React.Component {
         return (
             <Link
                 className={this.getClassName()}
-                to={this.props.route || '#'}
+                to={RouteHelper.build(this.props.route)}
             >
                 {this.props.children}
             </Link>

@@ -5,13 +5,12 @@ import './Profile.scss';
 import Form from '../form/Form';
 import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
+import {AuthContext} from '../AuthProvider';
 
 class Profile extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.id = this.props.match.params.id;
 
         this.state = {
             user: {},
@@ -20,10 +19,27 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({loading: true});
-        userServices.getUserById(this.id)
-            .then(user => this.setState({user, loading: false}));
+        this.updateUser();
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+            this.updateUser();
+        }
+    }
+
+    updateUser = () => {
+        const id = this.props.match.params.id;
+        if (id) {
+            this.setState({loading: true});
+            userServices.getUserById(id)
+                .then(user => this.setState({user, loading: false}));
+        } else {
+            const {currentUser} = this.context;
+            this.setState({user: currentUser});
+        }
+
+    };
 
     onSubmit = fields => {
         console.log(fields);
@@ -63,5 +79,7 @@ class Profile extends React.Component {
         );
     }
 }
+
+Profile.contextType = AuthContext;
 
 export default withRouter(Profile)
