@@ -1,20 +1,28 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import './Profile.scss';
 import Form from '../form/Form';
+import userServices from '../../services/userServices';
+import Loader from '../loader/Loader';
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
 
     constructor(props) {
         super(props);
 
+        this.id = this.props.match.params.id;
+
         this.state = {
-            user: {
-                id: 1,
-                name: 'UserName',
-                img: 'https://avatars.mds.yandex.net/get-pdb/1705881/f8db19d4-c10e-4d27-83a3-db53d4f52430/s375'
-            }
+            user: {},
+            loading: false
         }
+    }
+
+    componentDidMount() {
+        this.setState({loading: true});
+        userServices.getUserById(this.id)
+            .then(user => this.setState({user, loading: false}));
     }
 
     onSubmit = fields => {
@@ -23,7 +31,7 @@ export default class Profile extends React.Component {
 
     render() {
         const user = this.state.user;
-        const fields = {
+        const formFields = {
             name: {
                 label: 'Name',
                 value: user.name
@@ -34,18 +42,26 @@ export default class Profile extends React.Component {
         };
         return (
             <div className='profile-container'>
-                <div className='image-block'>
-                    <img src={user.img}/>
-                    <button>
-                        Change
-                    </button>
-                </div>
-                <Form
-                    fields={fields}
-                    onSubmit={this.onSubmit}
-                    submitText='Save'
-                />
+                {this.state.loading ?
+                    <Loader/>
+                    :
+                    <>
+                        <div className='image-block'>
+                            <img src={user.img}/>
+                            <button>
+                                Change
+                            </button>
+                        </div>
+                        <Form
+                            fields={formFields}
+                            onSubmit={this.onSubmit}
+                            submitText='Save'
+                        />
+                    </>
+                }
             </div>
         );
     }
 }
+
+export default withRouter(Profile)

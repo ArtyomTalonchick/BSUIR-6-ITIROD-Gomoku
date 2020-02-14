@@ -4,10 +4,11 @@ import {withRouter} from 'react-router-dom';
 import './SearchPreview.scss';
 import {Routes} from '../../../constants/routes';
 import DefaultAvatar from '../../../images/DefaultAvatar.png';
+import RouteHelper from '../../../helpers/RouteHelper';
 
 class SearchPreview extends React.Component {
 
-    onUserClick = () => this.props.history.push(`${Routes.profile}/${this.props.user.id}`);
+    onUserClick = () => this.props.history.push(RouteHelper.build(Routes.profile, {id: this.props.user.id}));
 
     render() {
         const user = this.props.user;

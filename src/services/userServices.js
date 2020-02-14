@@ -9,7 +9,7 @@ const createOrUpdate = (uid, name, email, image) => {
 
     return firebaseApp
         .database()
-        .ref('users/' + uid)
+        .ref(`users/${uid}`)
         .set(user)
 };
 
@@ -18,11 +18,20 @@ const getAll = () =>
         firebaseApp
             .database()
             .ref('users')
-            .on('value', response => resolve(unpackUsers(response.val())))
+            .on('value', response => resolve(unpackUsers(response.val() || {})))
+    );
+
+const getUserById = uid =>
+    new Promise(resolve =>
+        firebaseApp
+            .database()
+            .ref(`users/${uid}`)
+            .on('value', response => resolve(response.val() || {}))
     );
 
 
 export default {
     createOrUpdate,
-    getAll
+    getAll,
+    getUserById
 }

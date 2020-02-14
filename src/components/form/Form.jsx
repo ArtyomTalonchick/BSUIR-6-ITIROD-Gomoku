@@ -12,6 +12,12 @@ export default class Form extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.fields !== this.props.fields) {
+            this.setState({fields: JSON.parse(JSON.stringify(this.props.fields))});
+        }
+    }
+
     onChange = event => {
         const fieldName = event.target.name;
         const value = event.target.value;
