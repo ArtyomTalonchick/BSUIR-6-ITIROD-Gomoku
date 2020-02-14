@@ -17,8 +17,12 @@ export default class AuthProvider extends React.Component {
     }
 
     setCurrentUser = user => {
-        userServices.getUserById(user.uid)
-            .then(dbUser => this.setState({currentUser: dbUser}));
+        if(user){
+            userServices.getUserById(user.uid)
+                .then(dbUser => this.setState({currentUser: dbUser}));
+        } else {
+            this.setState({currentUser: null});
+        }
     };
 
     render() {
