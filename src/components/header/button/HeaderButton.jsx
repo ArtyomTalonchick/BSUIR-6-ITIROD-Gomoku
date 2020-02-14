@@ -2,11 +2,12 @@ import React from 'react';
 import {withRouter, Link} from 'react-router-dom';
 
 import './HeaderButton.scss';
+import RouteHelper from '../../../helpers/RouteHelper';
 
 class HeaderButton extends React.Component {
 
     getClassName = () => {
-        const pressed = this.props.location.pathname === this.props.route;
+        const pressed = RouteHelper.compare(this.props.route, this.props.location.pathname);
         return 'header-button-container' + (pressed ? ' pressed' : '');
     };
 

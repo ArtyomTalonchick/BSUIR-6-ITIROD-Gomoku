@@ -18,4 +18,17 @@ export default class RouteHelper {
                 result ? result + part.slice(part.includes('/') ? part.indexOf('/') : part.length) : part
             , '');
     }
+
+    // TODO: check optional parameters
+    static compare(mainRoute, checkRoute) {
+        const mainParts = mainRoute.split('/');
+        const checkParts = checkRoute.split('/');
+        for (let i = 0; i < mainParts.length; i++) {
+            if(mainParts[i].startsWith(':'))
+                continue;
+            if(mainParts[i] !== checkParts[i])
+                return false;
+        }
+        return true;
+    }
 }
