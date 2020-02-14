@@ -4,6 +4,7 @@ import './Header.scss';
 import {Routes} from '../../constants/routes';
 import HeaderButton from './button/HeaderButton';
 import authenticationServices from '../../services/authenticationServices';
+import MainLabel from '../../images/MainLabel.png'
 
 export default class Header extends React.Component {
 
@@ -12,6 +13,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header-container'>
+                <img src={MainLabel}/>
                 <div className='buttons-container'>
                     <HeaderButton route={Routes.search}>
                         Search
@@ -19,8 +21,8 @@ export default class Header extends React.Component {
                     <HeaderButton route={Routes.profile}>
                         My Profile
                     </HeaderButton>
-                    <i className='fa fa-sign-out' onClick={this.signOut}/>
                 </div>
+                <i className='fa fa-sign-out' onClick={this.signOut}/>
             </div>
         );
     }

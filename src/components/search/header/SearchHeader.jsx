@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './SearchHeader.scss';
-import 'font-awesome/css/font-awesome.min.css';
 
 export default class SearchHeader extends React.Component {
 
