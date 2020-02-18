@@ -5,7 +5,7 @@ const signUp = (name, email, password) =>
     firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(response => userServices.createOrUpdate(response.user.uid, name, email));
+        .then(response => userServices.create(response.user.uid, name, email));
 
 const signIn = (email, password) =>
     firebaseApp

@@ -2,8 +2,7 @@ import firebaseApp from '../firebaseApp';
 
 const unpackUsers = users => Object.entries(users).map(([uid, value]) => ({id: uid, ...value}));
 
-
-const createOrUpdate = (uid, name, email, image) => {
+const create = (uid, name, email, image) => {
     const user = {};
     Object.entries({name, email, image}).forEach(([key, value]) => value && (user[key] = value));
 
@@ -11,6 +10,13 @@ const createOrUpdate = (uid, name, email, image) => {
         .database()
         .ref(`users/${uid}`)
         .set(user)
+};
+
+const update = (uid, fields) => {
+    return firebaseApp
+        .database()
+        .ref(`users/${uid}`)
+        .update(fields)
 };
 
 const getAll = () =>
@@ -26,12 +32,13 @@ const getUserById = uid =>
         firebaseApp
             .database()
             .ref(`users/${uid}`)
-            .on('value', response => resolve(response.val() || {}))
+            .on('value', response => resolve({id: uid, ...response.val()} || {}))
     );
 
 
 export default {
-    createOrUpdate,
+    create,
+    update,
     getAll,
     getUserById
 }

@@ -49,6 +49,7 @@ export default class Form extends React.Component {
                         </span>
                             <input
                                 {...attributes}
+                                disabled={this.props.disabled}
                                 onChange={this.onChange}
                                 value={value || ''}
                                 name={fieldName}
@@ -56,6 +57,7 @@ export default class Form extends React.Component {
                             />
                         </label>
                     ))}
+                    {!this.props.disabled &&
                     <div className='controls'>
                         {this.props.additionalControl}
                         <button
@@ -65,6 +67,7 @@ export default class Form extends React.Component {
                             {this.props.submitText || 'Submit'}
                         </button>
                     </div>
+                    }
                 </form>
             </div>
         );

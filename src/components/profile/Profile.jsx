@@ -14,7 +14,8 @@ class Profile extends React.Component {
 
         this.state = {
             user: {},
-            loading: false
+            loading: false,
+            canEdit: false
         }
     }
 
@@ -29,20 +30,24 @@ class Profile extends React.Component {
     }
 
     updateUser = () => {
+        this.currentUser = this.context.currentUser;
         const id = this.props.match.params.id;
-        if (id) {
+        if (!id || id === this.currentUser?.id) {
+            this.setState({user: this.currentUser, loading: false, canEdit: true});
+        } else {
             this.setState({loading: true});
             userServices.getUserById(id)
                 .then(user => this.setState({user, loading: false}));
-        } else {
-            const {currentUser} = this.context;
-            this.setState({user: currentUser});
         }
-
     };
 
     onSubmit = fields => {
-        console.log(fields);
+        this.setState({loading: true});
+        const updates = {};
+        Object.entries(fields).forEach(([name, body]) => updates[name] = body.value);
+
+        userServices.update(this.state.user.id, updates)
+            .then(this.context.updateCurrentUser());
     };
 
     render() {
@@ -51,10 +56,7 @@ class Profile extends React.Component {
             name: {
                 label: 'Name',
                 value: user.name
-            },
-            field: {
-                label: 'Field Long Name'
-            },
+            }
         };
         return (
             <div className='profile-container'>
@@ -69,6 +71,7 @@ class Profile extends React.Component {
                             </button>
                         </div>
                         <Form
+                            disabled={!this.state.canEdit}
                             fields={formFields}
                             onSubmit={this.onSubmit}
                             submitText='Save'

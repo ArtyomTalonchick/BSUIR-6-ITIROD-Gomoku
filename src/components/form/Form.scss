@@ -12,16 +12,22 @@ div.form-container {
     margin: 20px 0;
 
     span {
-      margin-right: auto;
+      margin: auto auto auto 0;
+      color: $grayDark;
     }
 
     input {
       background: $surface;
+      color: $textDark;
       height: 20px;
       padding: 3px 3px 3px 10px;
       border: 1px $black solid;
       border-radius: 0;
       margin-left: 10px;
+
+      &:disabled {
+        border: none;
+      }
     }
   }
 
