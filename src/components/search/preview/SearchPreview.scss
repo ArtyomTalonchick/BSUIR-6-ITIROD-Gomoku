@@ -8,10 +8,7 @@ div.search-preview-container {
   border: 1px $grayLight solid;
   border-radius: 10px;
 
-  img {
-    height: 100px;
-    width: 100px;
-    border-radius: 100px;
+  div.image {
     margin-right: 20px;
 
     &:hover {

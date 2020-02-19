@@ -10,13 +10,27 @@ div.profile-container {
   }
 
   div.image-block {
-    img {
+
+    label {
       display: block;
-      margin: 0 auto 20px auto;
-      width: 250px;
-      height: 250px;
-      border-radius: 10px;
+      width: max-content;
+      margin: 20px auto auto auto;
+      background: $grayLight;
+      padding: 5px;
+      border: 2px transparent solid;
+      border-radius: 13px;
+      color: $textDark;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $secondary;
+      }
+
+      input {
+        display: none;
+      }
     }
+
   }
 
   button {

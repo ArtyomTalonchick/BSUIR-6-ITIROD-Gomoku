@@ -35,10 +35,25 @@ const getUserById = uid =>
             .on('value', response => resolve({id: uid, ...response.val()} || {}))
     );
 
+const updateAvatar = (uid, file) =>
+    new Promise(resolve =>
+        firebaseApp
+            .storage()
+            .ref(`avatar/${uid}`)
+            .put(file)
+            .then( snapshot => {
+                snapshot.ref.getDownloadURL()
+                    .then(downloadURL =>
+                        update(uid, {img: downloadURL})
+                            .then(resolve)
+                    )
+            })
+    );
 
 export default {
     create,
     update,
     getAll,
-    getUserById
+    getUserById,
+    updateAvatar
 }

@@ -6,6 +6,7 @@ import Form from '../form/Form';
 import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
 import {AuthContext} from '../AuthProvider';
+import Image from '../image/Image';
 
 class Profile extends React.Component {
 
@@ -15,6 +16,7 @@ class Profile extends React.Component {
         this.state = {
             user: {},
             loading: false,
+            imgLoading: false,
             canEdit: false
         }
     }
@@ -47,7 +49,17 @@ class Profile extends React.Component {
         Object.entries(fields).forEach(([name, body]) => updates[name] = body.value);
 
         userServices.update(this.state.user.id, updates)
-            .then(this.context.updateCurrentUser());
+            .then(this.context.updateCurrentUser);
+    };
+
+    onUploadImage = event => {
+        this.setState({imgLoading: true});
+        const file = event.target.files[0];
+        userServices.updateAvatar(this.state.user.id, file)
+            .then(() => {
+                this.context.updateCurrentUser();
+                this.setState({imgLoading: false});
+            });
     };
 
     render() {
@@ -65,10 +77,24 @@ class Profile extends React.Component {
                     :
                     <>
                         <div className='image-block'>
-                            <img src={user.img}/>
-                            <button>
-                                Change
-                            </button>
+                            <Image
+                                loading={this.state.imgLoading}
+                                src={user.img}
+                                height='250px'
+                                width='250px'
+                            />
+                            {this.state.canEdit &&
+                            <label>
+                                <span>
+                                    Change
+                                </span>
+                                <input
+                                    onChange={this.onUploadImage}
+                                    type='file'
+                                    accept='.jpg, .jpeg, .png'
+                                />
+                            </label>
+                            }
                         </div>
                         <Form
                             disabled={!this.state.canEdit}

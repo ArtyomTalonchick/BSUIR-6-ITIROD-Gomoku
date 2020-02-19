@@ -1,0 +1,16 @@
+@import "../../constants/colors.scss";
+
+div.image-container {
+  img {
+    object-fit: cover;
+    display: block;
+    width: inherit;
+    height: inherit;
+    margin: 0 auto 20px auto;
+    border-radius: 10px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}

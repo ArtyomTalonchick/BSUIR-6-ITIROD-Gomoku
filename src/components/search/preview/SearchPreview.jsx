@@ -3,8 +3,8 @@ import {withRouter} from 'react-router-dom';
 
 import './SearchPreview.scss';
 import {Routes} from '../../../constants/routes';
-import DefaultAvatar from '../../../images/DefaultAvatar.png';
 import RouteHelper from '../../../helpers/RouteHelper';
+import Image from '../../image/Image';
 
 class SearchPreview extends React.Component {
 
@@ -14,7 +14,14 @@ class SearchPreview extends React.Component {
         const user = this.props.user;
         return (
             <div className='search-preview-container'>
-                <img src={user.img || DefaultAvatar} onClick={this.onUserClick}/>
+                <div className='image' onClick={this.onUserClick}>
+                    <Image
+                        src={user.img}
+                        height='100px'
+                        width='100px'
+                    />
+                </div>
+
                 <div className='info-block'>
                     <span onClick={this.onUserClick}>
                         {user.name}
