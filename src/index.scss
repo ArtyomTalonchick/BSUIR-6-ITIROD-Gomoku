@@ -1,7 +1,8 @@
-@import "./constants/colors.scss";
+@import "./constants/colors";
+@import "./constants/constants";
 
 body {
-  margin: 0;
+  margin: $headerHeight 0 0 0;
 }
 
 button {

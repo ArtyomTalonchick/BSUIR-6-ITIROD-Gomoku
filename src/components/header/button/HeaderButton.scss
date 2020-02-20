@@ -1,10 +1,11 @@
 @import "../../../constants/colors";
+@import "../../../constants/constants";
 
 a.header-button-container {
   background: $primary;
-  width: 100px;
-  height: 40px;
-  line-height: 40px;
+  min-width: 100px;
+  height: $headerHeight;
+  line-height: $headerHeight;
   border: 0;
   margin: 0 10px;
   color: $textLight;

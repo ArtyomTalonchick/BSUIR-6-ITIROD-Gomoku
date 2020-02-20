@@ -35,6 +35,7 @@ export default class Image extends React.Component {
             <div className='image-container' style={this.getStyle()}>
                 {this.state.loading && <Loader/>}
                 <img
+                    alt=''
                     ref={this.imgRef}
                     src={this.props.src || DefaultImage}
                     onLoad={this.updateLoadingStatus}
