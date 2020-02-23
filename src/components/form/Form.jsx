@@ -36,10 +36,12 @@ export default class Form extends React.Component {
         return (
             <div className='form-container'>
                 {this.props.title && (
-                    <>
-                        <h2>{this.props.title}</h2>
-                        <hr/>
-                    </>
+                    <h2 className='title'>{this.props.title}</h2>
+                )}
+                {this.props.error && (
+                    <div className='error'>
+                        <span>{this.props.error}</span>
+                    </div>
                 )}
                 <form className='form' onSubmit={this.onSubmit}>
                     {fields && Object.entries(fields).map(([fieldName, {label, value, attributes}]) => (

@@ -13,7 +13,7 @@ div.authentication-blank-container {
 
   div.form {
     background: $surface;
-    min-width: 285px;
+    min-width: min-content;
     padding: 20px;
     border: 1px $grayLight solid;
     border-radius: 17px;

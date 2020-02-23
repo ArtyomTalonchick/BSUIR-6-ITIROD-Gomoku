@@ -2,9 +2,23 @@
 
 div.form-container {
 
-  h2 {
+  width: min-content;
+
+  hr {
     margin: 0;
+  }
+
+  h2.title {
+    margin-top: 0;
+    margin-bottom: 10px;
     text-align: center;
+  }
+
+  div.error {
+    background: $error;
+    color: $errorText;
+    padding: 12px 20px;
+    border-radius: 5px;
   }
 
   label {
