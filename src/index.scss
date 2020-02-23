@@ -37,4 +37,9 @@ button.secondary {
 a {
   text-decoration: none;
   outline: none;
+  color: $secondaryVariant;
+
+  &:hover {
+    color: $secondary;
+  }
 }

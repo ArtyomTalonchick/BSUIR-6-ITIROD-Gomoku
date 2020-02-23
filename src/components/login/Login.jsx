@@ -1,9 +1,10 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import Form from '../form/Form';
 import {Routes} from '../../constants/routes';
 import authenticationServices from '../../services/authenticationServices';
-import RouteHelper from '../../helpers/RouteHelper';
+import Loader from '../loader/Loader';
 
 const FIELDS = {
     email: {label: 'Login'},
@@ -12,25 +13,42 @@ const FIELDS = {
 
 export default class Login extends React.Component {
 
-    toRegistration = () => this.props.history.push(Routes.registration);
+    constructor(props) {
+        super(props);
 
-    onSubmit = fields =>
+        this.state = {
+            loading: false,
+            fields: JSON.parse(JSON.stringify(FIELDS))
+        };
+    }
+
+    onSubmit = fields => {
+        // TODO: need to notify user
+        if (!fields.email.value || !fields.password.value) {
+            return;
+        }
+        this.setState({fields: JSON.parse(JSON.stringify(fields)), loading: true});
         authenticationServices.signIn(fields.email.value, fields.password.value)
-            .then(() => this.props.history.push(RouteHelper.build(Routes.profile, {id: ''})))
-            .catch(error => alert(error));
+            .catch(error => {
+                this.setState({loading: false});
+                // TODO: not use alert
+                alert(error);
+            });
+    };
 
     render() {
-        return (
+        return this.state.loading ?
+            <Loader/>
+            :
             <Form
                 title='Login'
-                fields={FIELDS}
+                fields={this.state.fields}
                 onSubmit={this.onSubmit}
                 additionalControl={(
-                    <button className='secondary' onClick={this.toRegistration}>
+                    <Link to={Routes.registration}>
                         To Registration
-                    </button>
+                    </Link>
                 )}
-            />
-        );
+            />;
     }
 }
