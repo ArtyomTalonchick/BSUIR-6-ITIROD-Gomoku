@@ -1,9 +1,8 @@
 @import "../constants/colors";
+@import "../constants/constants";
 
 div.app-container {
-  background: $background;
   padding: 20px;
-  height: 100%;
-  min-height: 100vh;
   min-width: 350px;
+  margin-top: $headerHeight;
 }

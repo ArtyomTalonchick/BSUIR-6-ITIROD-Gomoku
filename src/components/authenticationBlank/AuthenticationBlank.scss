@@ -1,19 +1,22 @@
 @import "../../constants/colors";
 
 div.authentication-blank-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 
-  div.form{
+  div.form {
     background: $surface;
     min-width: 285px;
-
     padding: 20px;
     border: 1px $grayLight solid;
     border-radius: 17px;
-
   }
 
 }

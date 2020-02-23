@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 import Form from '../form/Form';
 import {Routes} from '../../constants/routes';
 import authenticationServices from '../../services/authenticationServices';
+import RouteHelper from '../../helpers/RouteHelper';
 
 const FIELDS = {
     name: {label: 'Name'},
@@ -17,7 +18,7 @@ class Registration extends React.Component {
 
     onSubmit = fields =>
         authenticationServices.signUp(fields.name.value, fields.email.value, fields.password.value)
-            .then(() => this.props.history.push(Routes.profile))
+            .then(() => this.props.history.push(RouteHelper.build(Routes.profile, {id: ''})))
             .catch(error => alert(error));
 
     render() {
