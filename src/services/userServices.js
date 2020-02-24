@@ -19,29 +19,13 @@ const update = (uid, fields) => {
         .update(fields)
 };
 
-const getAll = () =>
-    new Promise(resolve =>
-        firebaseApp
-            .database()
-            .ref('users')
-            .on('value', response => resolve(unpackUsers(response.val() || {})))
-    );
-
-const getUserById = uid =>
-    new Promise(resolve =>
-        firebaseApp
-            .database()
-            .ref(`users/${uid}`)
-            .on('value', response => resolve({id: uid, ...response.val()} || {}))
-    );
-
 const updateAvatar = (uid, file) =>
     new Promise(resolve =>
         firebaseApp
             .storage()
             .ref(`avatar/${uid}`)
             .put(file)
-            .then( snapshot => {
+            .then(snapshot => {
                 snapshot.ref.getDownloadURL()
                     .then(downloadURL =>
                         update(uid, {img: downloadURL})
@@ -50,10 +34,40 @@ const updateAvatar = (uid, file) =>
             })
     );
 
+const getAll = callback =>
+    firebaseApp
+        .database()
+        .ref('users')
+        .once('value')
+        .then(response => unpackUsers(response.val() || {}));
+
+
+const getUser = uid =>
+    firebaseApp
+        .database()
+        .ref(`users/${uid}`)
+        .once('value')
+        .then(response => ({id: uid, ...response.val()} || {}));
+
+
+const onUserUpdate = (uid, callback) => {
+    const fullCallback = response => callback({id: uid, ...response.val()} || {});
+    firebaseApp
+        .database()
+        .ref(`users/${uid}`)
+        .on('value', fullCallback);
+
+    return () => firebaseApp
+        .database()
+        .ref(`users/${uid}`)
+        .off('value', fullCallback);
+};
+
 export default {
     create,
     update,
-    getAll,
-    getUserById,
-    updateAvatar
+    updateAvatar,
+    onUserUpdate,
+    getUser,
+    getAll
 }

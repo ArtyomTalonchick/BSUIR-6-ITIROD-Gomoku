@@ -16,24 +16,23 @@ export default class AuthProvider extends React.Component {
         firebaseApp.auth().onAuthStateChanged(this.setCurrentUser);
     }
 
+    componentWillUnmount() {
+        this.detachListener();
+    }
+
     setCurrentUser = user => {
         if (user) {
-            userServices.getUserById(user.uid)
-                .then(dbUser => this.setState({currentUser: dbUser}));
+            this.detachListener =
+                userServices.onUserUpdate(user.uid, dbUser => this.setState({currentUser: dbUser}));
         } else {
             this.setState({currentUser: null});
         }
     };
 
-    updateCurrentUser = () =>
-        userServices.getUserById(this.state.currentUser?.id)
-            .then(dbUser => this.setState({currentUser: dbUser}));
-
-
     render() {
         return (
             <AuthContext.Provider
-                value={{currentUser: this.state.currentUser, updateCurrentUser: this.updateCurrentUser}}>
+                value={{currentUser: this.state.currentUser}}>
                 {this.props.children}
             </AuthContext.Provider>
         );

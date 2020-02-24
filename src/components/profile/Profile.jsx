@@ -38,7 +38,7 @@ class Profile extends React.Component {
             this.setState({user: this.currentUser, loading: false, canEdit: true});
         } else {
             this.setState({loading: true});
-            userServices.getUserById(id)
+            userServices.getUser(id)
                 .then(user => this.setState({user, loading: false}));
         }
     };
@@ -49,17 +49,14 @@ class Profile extends React.Component {
         Object.entries(fields).forEach(([name, body]) => updates[name] = body.value);
 
         userServices.update(this.state.user.id, updates)
-            .then(this.context.updateCurrentUser);
+            .then(() => this.setState({loading: false}));
     };
 
     onUploadImage = event => {
         this.setState({imgLoading: true});
         const file = event.target.files[0];
         userServices.updateAvatar(this.state.user.id, file)
-            .then(() => {
-                this.context.updateCurrentUser();
-                this.setState({imgLoading: false});
-            });
+            .then(() => this.setState({imgLoading: false}));
     };
 
     render() {
