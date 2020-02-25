@@ -1,15 +1,17 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import './Game.scss';
 import Canvas from './canvas/Canvas';
 
-export default class Game extends React.Component {
+class Game extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
 
-        }
+        console.log(this.props.location.state);
+
+        this.state = {}
     }
 
 
@@ -21,3 +23,5 @@ export default class Game extends React.Component {
         );
     }
 }
+
+export default withRouter(Game);

@@ -35,6 +35,7 @@ const onChallengeStatusUpdate = (id, opponentId, acceptCallback, refuseCallback)
 
 
 export default {
+    STATUSES,
     toChallenge,
     cancelChallenge,
     acceptChallenge,

@@ -1,11 +1,13 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import {AuthContext} from '../AuthProvider';
 import Alert from '../alert/Alert';
 import gameServices from '../../services/gameServices';
 import Loader from '../loader/Loader';
+import {Routes} from '../../constants/routes';
 
-export default class GamePromise extends React.Component {
+class GamePromise extends React.Component {
 
     constructor(props) {
         super(props);
@@ -37,12 +39,14 @@ export default class GamePromise extends React.Component {
         }
     };
 
-    // TODO redirect to game
-    onAccept = challengeStatus => {
-        console.log('ACCEPT')
-    };
+    onAccept = () =>
+        this.props.history.push({
+            pathname: Routes.game,
+            state: {opponentId: this.state.opponentId, instigator: true}
+        });
 
-    onRefuse = challengeStatus => {
+
+    onRefuse = () => {
         this.setState({loading: false});
         this.detachListener && this.detachListener();
     };
@@ -84,3 +88,5 @@ export default class GamePromise extends React.Component {
 }
 
 GamePromise.contextType = AuthContext;
+
+export default withRouter(GamePromise);

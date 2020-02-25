@@ -1,10 +1,12 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 import {AuthContext} from '../AuthProvider';
 import Alert from '../alert/Alert';
 import gameServices from '../../services/gameServices';
+import {Routes} from '../../constants/routes';
 
-export default class GameAlert extends React.Component {
+class GameAlert extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,16 +26,25 @@ export default class GameAlert extends React.Component {
 
     checkOpponent = () => {
         const games = this.context.currentUser.games;
-        if (games && Object.keys(games)[0] !== this.state.opponentId) {
-            this.setState({opponentId: Object.keys(games)[0]});
-        } else if (!games && this.state.opponentId) {
+        if (games) {
+            const opponentId = Object.keys(games)[0];
+            const gameStatus = games[opponentId];
+            if (opponentId !== this.state.opponentId && gameStatus === gameServices.STATUSES.WAIT) {
+                this.setState({opponentId});
+            } else if (opponentId === this.state.opponentId && gameStatus !== gameServices.STATUSES.WAIT){
+                this.setState({opponentId: undefined});
+            }
+        } else if (this.state.opponentId) {
             this.setState({opponentId: undefined});
         }
     };
 
-    // TODO redirect to game
     onAccept = () => {
         gameServices.acceptChallenge(this.context.currentUser?.id, this.state.opponentId);
+        this.props.history.push({
+            pathname: Routes.game,
+            state: {opponentId: this.state.opponentId, instigator: false}
+        });
     };
 
     onRefuse = () => {
@@ -65,3 +76,5 @@ export default class GameAlert extends React.Component {
 }
 
 GameAlert.contextType = AuthContext;
+
+export default withRouter(GameAlert);
