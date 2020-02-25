@@ -9,7 +9,7 @@ const STATUSES = {
 const getRef = (id, opponentId) =>
     firebaseApp
         .database()
-        .ref(`users/${opponentId}/challenges/${id}`);
+        .ref(`users/${opponentId}/games/${id}`);
 
 const updateChallengeStatus = (id, opponentId, status) => getRef(id, opponentId).set(status);
 

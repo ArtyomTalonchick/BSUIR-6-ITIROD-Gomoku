@@ -23,10 +23,10 @@ export default class GameAlert extends React.Component {
     }
 
     checkOpponent = () => {
-        const challenges = this.context.currentUser.challenges;
-        if (challenges && Object.keys(challenges)[0] !== this.state.opponentId) {
-            this.setState({opponentId: Object.keys(challenges)[0]});
-        } else if (!challenges && this.state.opponentId) {
+        const games = this.context.currentUser.games;
+        if (games && Object.keys(games)[0] !== this.state.opponentId) {
+            this.setState({opponentId: Object.keys(games)[0]});
+        } else if (!games && this.state.opponentId) {
             this.setState({opponentId: undefined});
         }
     };

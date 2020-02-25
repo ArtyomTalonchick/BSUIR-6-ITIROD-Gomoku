@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Game.scss';
+import './Canvas.scss';
 import {COLORS} from './constants';
 import Intersections from './Intersections';
 
