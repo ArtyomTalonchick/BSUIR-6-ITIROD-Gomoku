@@ -1,7 +1,8 @@
 import {COLORS} from './constants';
 
 export default class Intersections {
-    constructor(count, canvas) {
+    constructor(count, canvas, pointColor) {
+        this.pointColor = pointColor;
         this.count = count;
         this.canvas = canvas;
         this.canvasCtx = this.canvas.getContext('2d');
@@ -20,7 +21,7 @@ export default class Intersections {
             const x = this.cellSize * (i + 1);
             for (let j = 0; j < this.count; j++) {
                 const y = this.cellSize * (j + 1);
-                this.intersections[i][j] = {x, y}
+                this.intersections[i][j] = {x, y, i, j}
             }
         }
     };
@@ -67,7 +68,8 @@ export default class Intersections {
     onMouseDown = event => {
         const currentIntersection = this.getIntersectionFromMousePosition(event);
         if (currentIntersection && this.isFree(currentIntersection)) {
-            this.setColor(currentIntersection, COLORS.WHITE_POINT);
+            this.setColor(currentIntersection, this.pointColor);
+            return {x: currentIntersection.i, y: currentIntersection.j};
         }
     };
 

@@ -35,6 +35,14 @@ export default class Canvas extends React.Component {
             this.updateCanvasSize();
             this.intersections.updateSize();
         }
+
+        if (JSON.stringify(prevProps.opponentMove) !== JSON.stringify(this.props.opponentMove && this.props.opponentMove)) {
+            this.intersections.update(this.props.opponentMove.x, this.props.opponentMove.y, this.props.opponentPointColor);
+        }
+
+        if (JSON.stringify(prevProps.move) !== JSON.stringify(this.props.move && this.props.move)) {
+            this.intersections.update(this.props.move.x, this.props.move.y, this.props.pointColor);
+        }
     }
 
     componentWillUnmount() {
@@ -52,11 +60,7 @@ export default class Canvas extends React.Component {
     };
 
     initIntersections = () => {
-        this.intersections = new Intersections(FIELD_SIZE, this.canvas);
-        this.intersections.update(1, 2, COLORS.BLACK_POINT);
-        this.intersections.update(2, 2, COLORS.BLACK_POINT);
-        this.intersections.update(3, 2, COLORS.BLACK_POINT);
-        this.intersections.update(4, 2, COLORS.WHITE_POINT);
+        this.intersections = new Intersections(FIELD_SIZE, this.canvas, this.props.pointColor);
     };
 
     updateCanvasSize = () => {
@@ -82,8 +86,21 @@ export default class Canvas extends React.Component {
         }
     };
 
-    onMouseMove = event => this.intersections.onMouseMove(event);
-    onMouseDown = event => this.intersections.onMouseDown(event);
+    onMouseMove = event => {
+        if (!this.props.enabled)
+            return;
+
+        this.intersections.onMouseMove(event);
+    };
+    onMouseDown = event => {
+        if (!this.props.enabled)
+            return;
+
+        const move = this.intersections.onMouseDown(event);
+        if (move) {
+            this.props.onNewMove(move.x, move.y);
+        }
+    };
 
 
     render() {

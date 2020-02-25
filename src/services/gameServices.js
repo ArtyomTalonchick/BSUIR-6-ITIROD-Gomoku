@@ -6,10 +6,10 @@ const STATUSES = {
     REFUSE: null
 };
 
-const getRef = (opponentId, id) =>
+const getRef = (id1, id2) =>
     firebaseApp
         .database()
-        .ref(`users/${opponentId}/games/${id}`);
+        .ref(`users/${id1}/games/${id2}`);
 
 const updateChallengeStatus = (opponentId, id, status) => getRef(opponentId, id).set(status);
 
@@ -17,8 +17,11 @@ const toChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, ST
 
 const cancelChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, STATUSES.REFUSE);
 
-const acceptChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, STATUSES.ACCEPT);
+const acceptChallenge = (opponentId, id) =>
+    updateChallengeStatus(id, opponentId, STATUSES.ACCEPT)
+        .then(() => updateChallengeStatus(opponentId, id, STATUSES.ACCEPT));
 
+const newMove = (opponentId, id, x, y) => updateChallengeStatus(opponentId, id, `${x}-${y}`);
 
 
 const onChallengeStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
@@ -59,11 +62,27 @@ const onNewChallenge = (id, onCreatedCallback, onRemovedCallback) => {
     return () => ref.off('value', fullCallback);
 };
 
+const onNewOpponentMove = (opponentId, id, callback) => {
+    const fullCallback = response => {
+        const responseValue = response.val();
+        const r = /\d+-\d+/;
+        if (r.test(responseValue)) {
+            const [x, y] = responseValue.split('-').map(v => parseInt(v));
+            callback(x, y);
+        }
+    };
+
+    getRef(id, opponentId).on('value', fullCallback);
+    return () => getRef(id, opponentId).off('value', fullCallback);
+};
+
 
 export default {
     toChallenge,
     cancelChallenge,
     acceptChallenge,
+    newMove,
     onChallengeStatusUpdate,
-    onNewChallenge
+    onNewChallenge,
+    onNewOpponentMove
 }
