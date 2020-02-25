@@ -22,7 +22,7 @@ button {
 }
 
 button.secondary {
-  background: $surface;
+  background: transparent;
   border: 2px $secondaryVariant solid;
 
   &:hover {

@@ -5,6 +5,7 @@ import SearchHeader from './header/SearchHeader';
 import SearchPreview from './preview/SearchPreview';
 import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
+import GamePromise from '../gamePromise/GamePromise';
 
 export default class Search extends React.Component {
 
@@ -14,7 +15,8 @@ export default class Search extends React.Component {
         this.state = {
             loading: false,
             users: [],
-            searchValue: ''
+            searchValue: '',
+            selectedOpponent: undefined
         }
     }
 
@@ -29,8 +31,7 @@ export default class Search extends React.Component {
     getUsersFromSearch = () =>
         this.state.users.filter(u => u.name.toUpperCase().includes(this.state.searchValue.toUpperCase()));
 
-    // TODO
-    onChallenge = user => console.log('onUserClick: ', user);
+    onChallenge = user => this.setState({selectedOpponent: user});
 
     render() {
         return (
@@ -41,6 +42,7 @@ export default class Search extends React.Component {
                 {this.getUsersFromSearch().map(user => (
                     <SearchPreview key={user.id} user={user} onChallenge={() => this.onChallenge(user)}/>
                 ))}
+                <GamePromise opponent={this.state.selectedOpponent} onCancel={this.onChallenge}/>
             </div>
         );
     }

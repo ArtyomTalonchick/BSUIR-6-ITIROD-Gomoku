@@ -12,6 +12,7 @@ import AuthenticationBlank from './authenticationBlank/AuthenticationBlank';
 import Login from './login/Login';
 import Registration from './registration/Registration';
 import {AuthContext} from './AuthProvider';
+import GameAlert from './gameAlert/GameAlert';
 
 export default class App extends React.Component {
 
@@ -31,6 +32,7 @@ export default class App extends React.Component {
                                 <Redirect to={Routes.profile}/>
                             </Switch>
                         </PageBlank>
+                        <GameAlert/>
                     </>
                     }
                     {currentUser === null &&

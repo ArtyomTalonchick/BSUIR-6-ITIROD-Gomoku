@@ -1,0 +1,72 @@
+@import "../../constants/colors";
+@import "../../constants/constants";
+
+div.alert-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+
+  z-index: 100;
+
+  div.alert {
+    max-width: 50%;
+    min-width: 285px;
+    background: #bee5eb;
+    color: #0c5460;
+    padding: 12px 20px;
+    border: 1px solid #0c5460;
+    border-radius: 10px;
+
+    span.title {
+      font-weight: bold;
+      display: block;
+      text-align: center;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      background: #0c5460;
+    }
+
+    div.controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    &.error {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 12px 20px;
+      border: 1px solid #721c24;
+
+      hr {
+        background: #721c24;
+      }
+    }
+
+    &.primary {
+      background: #cce5ff;
+      color: #004085;
+      padding: 12px 20px;
+      border: 1px solid #004085;
+
+      hr {
+        background: #004085;
+      }
+    }
+
+  }
+
+}
