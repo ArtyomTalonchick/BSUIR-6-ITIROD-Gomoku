@@ -6,21 +6,22 @@ const STATUSES = {
     REFUSE: null
 };
 
-const getRef = (id, opponentId) =>
+const getRef = (opponentId, id) =>
     firebaseApp
         .database()
         .ref(`users/${opponentId}/games/${id}`);
 
-const updateChallengeStatus = (id, opponentId, status) => getRef(id, opponentId).set(status);
+const updateChallengeStatus = (opponentId, id, status) => getRef(opponentId, id).set(status);
 
-const toChallenge = (opponentId, id) => updateChallengeStatus(id, opponentId, STATUSES.WAIT);
+const toChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, STATUSES.WAIT);
 
-const cancelChallenge = (opponentId, id) => updateChallengeStatus(id, opponentId, STATUSES.REFUSE);
+const cancelChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, STATUSES.REFUSE);
 
-const acceptChallenge = (opponentId, id) => updateChallengeStatus(id, opponentId, STATUSES.ACCEPT);
+const acceptChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, STATUSES.ACCEPT);
 
 
-const onChallengeStatusUpdate = (id, opponentId, acceptCallback, refuseCallback) => {
+
+const onChallengeStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
     const fullCallback = response => {
         if (response.val() === STATUSES.ACCEPT) {
             acceptCallback();
@@ -28,9 +29,9 @@ const onChallengeStatusUpdate = (id, opponentId, acceptCallback, refuseCallback)
             refuseCallback();
         }
     };
-    getRef(id, opponentId).on('value', fullCallback);
+    getRef(opponentId, id).on('value', fullCallback);
 
-    return () => getRef(id, opponentId).off('value', fullCallback);
+    return () => getRef(opponentId, id).off('value', fullCallback);
 };
 
 const onNewChallenge = (id, onCreatedCallback, onRemovedCallback) => {

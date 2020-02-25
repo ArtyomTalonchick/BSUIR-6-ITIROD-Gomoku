@@ -33,8 +33,8 @@ class GamePromise extends React.Component {
         if (this.props.opponent) {
             gameServices.toChallenge(this.props.opponent.id, this.context.currentUser?.id)
                 .then(() => {
-                    this.detachListener = gameServices.onChallengeStatusUpdate(
-                        this.context.currentUser?.id, this.props.opponent.id, this.onAccept, this.onRefuse);
+                    this.detachListener = gameServices.onChallengeStatusUpdate(this.props.opponent.id,
+                        this.context.currentUser?.id, this.onAccept, this.onRefuse);
                 });
         }
     };
