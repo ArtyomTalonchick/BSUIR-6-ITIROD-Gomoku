@@ -17,27 +17,17 @@ class GameAlert extends React.Component {
     }
 
     componentDidMount() {
-        this.checkOpponent();
+        this.detachListener =
+            gameServices.onNewChallenge(this.context.currentUser?.id, this.onNewOpponent, this.onRemoveOpponent);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        this.checkOpponent();
+    componentWillUnmount() {
+        this.detachListener();
     }
 
-    checkOpponent = () => {
-        const games = this.context.currentUser.games;
-        if (games) {
-            const opponentId = Object.keys(games)[0];
-            const gameStatus = games[opponentId];
-            if (opponentId !== this.state.opponentId && gameStatus === gameServices.STATUSES.WAIT) {
-                this.setState({opponentId});
-            } else if (opponentId === this.state.opponentId && gameStatus !== gameServices.STATUSES.WAIT){
-                this.setState({opponentId: undefined});
-            }
-        } else if (this.state.opponentId) {
-            this.setState({opponentId: undefined});
-        }
-    };
+    onNewOpponent = opponentId => this.setState({opponentId});
+
+    onRemoveOpponent = () => this.setState({opponentId: undefined});
 
     onAccept = () => {
         gameServices.acceptChallenge(this.context.currentUser?.id, this.state.opponentId);

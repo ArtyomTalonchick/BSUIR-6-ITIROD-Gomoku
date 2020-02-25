@@ -33,11 +33,36 @@ const onChallengeStatusUpdate = (id, opponentId, acceptCallback, refuseCallback)
     return () => getRef(id, opponentId).off('value', fullCallback);
 };
 
+const onNewChallenge = (id, onCreatedCallback, onRemovedCallback) => {
+    let previousOpponentId;
+    const fullCallback = response => {
+        const games = response.val();
+        if (games) {
+            const opponentId = Object.keys(games)[0];
+            const gameStatus = games[opponentId];
+            if (opponentId !== previousOpponentId && gameStatus === STATUSES.WAIT) {
+                onCreatedCallback(opponentId);
+                previousOpponentId = opponentId;
+            } else if (opponentId === previousOpponentId && gameStatus !== STATUSES.WAIT) {
+                onRemovedCallback();
+                previousOpponentId = undefined;
+            }
+        } else if (previousOpponentId) {
+            onRemovedCallback();
+            previousOpponentId = undefined;
+        }
+    };
+
+    const ref = firebaseApp.database().ref(`users/${id}/games`);
+    ref.on('value', fullCallback);
+    return () => ref.off('value', fullCallback);
+};
+
 
 export default {
-    STATUSES,
     toChallenge,
     cancelChallenge,
     acceptChallenge,
-    onChallengeStatusUpdate
+    onChallengeStatusUpdate,
+    onNewChallenge
 }
