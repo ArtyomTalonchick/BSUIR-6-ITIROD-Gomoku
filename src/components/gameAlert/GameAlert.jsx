@@ -30,10 +30,10 @@ class GameAlert extends React.Component {
     onRemoveOpponent = () => this.setState({opponentId: undefined});
 
     onAccept = () => {
-        gameServices.acceptChallenge(this.context.currentUser?.id, this.state.opponentId);
+        const gameId = gameServices.acceptChallenge(this.context.currentUser?.id, this.state.opponentId);
         this.props.history.push({
             pathname: Routes.game,
-            state: {opponentId: this.state.opponentId, instigator: false}
+            state: {gameId, opponentId: this.state.opponentId, instigator: false}
         });
     };
 

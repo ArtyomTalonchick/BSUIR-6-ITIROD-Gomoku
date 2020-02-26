@@ -1,10 +1,13 @@
 import {COLORS} from './constants';
 
+const COUNT_WIN = 5;
+
 export default class Intersections {
-    constructor(count, canvas, pointColor) {
-        this.pointColor = pointColor;
+    constructor(count, canvas, pointColor, onWinCallback) {
         this.count = count;
         this.canvas = canvas;
+        this.pointColor = pointColor;
+        this.onWinCallback = onWinCallback;
         this.canvasCtx = this.canvas.getContext('2d');
         this.previousIntersection = undefined;
 
@@ -69,6 +72,7 @@ export default class Intersections {
         const currentIntersection = this.getIntersectionFromMousePosition(event);
         if (currentIntersection && this.isFree(currentIntersection)) {
             this.setColor(currentIntersection, this.pointColor);
+            this.checkWin(currentIntersection);
             return {x: currentIntersection.i, y: currentIntersection.j};
         }
     };
@@ -105,6 +109,40 @@ export default class Intersections {
         this.canvasCtx.lineTo(intersection.x + this.intersectionSize, intersection.y);
         this.canvasCtx.stroke();
         this.canvasCtx.closePath();
+    };
+
+    checkWin = intersection => {
+        const i = intersection.i;
+        const j = intersection.j;
+        const left = i - COUNT_WIN + 1 >= 0 ? i - COUNT_WIN + 1 : 0;
+        const right = i + COUNT_WIN - 1 < this.count ? i + COUNT_WIN - 1 : this.count - 1;
+        const top = j - COUNT_WIN + 1 >= 0 ? j - COUNT_WIN + 1 : 0;
+        const bottom = j + COUNT_WIN - 1 < this.count ? j + COUNT_WIN - 1 : this.count - 1;
+
+        const containWin = indexes => {
+            let count = 0;
+            for (let index of indexes) {
+                count = this.intersections[index[0]][index[1]].color === this.pointColor ? count + 1 : 0;
+                if (count >= COUNT_WIN)
+                    return true;
+            }
+        };
+
+        const range = (start, end) => Array(end - start + 1).fill()
+            .map((x, index) => start + index);
+
+        const arrays = [];
+        arrays.push(range(left, right).map(v => [v, j]));
+        arrays.push(range(top, bottom).map(v => [i, v]));
+        arrays.push(range(-Math.min(i - left, j - top), Math.min(right - i, bottom - j)).map(v => [i + v, j + v]));
+        arrays.push(range(-Math.min(right - i, j - top), Math.min(i - left, bottom - j)).map(v => [i - v, j + v]));
+
+        for (let array of arrays) {
+            if (containWin(array)) {
+                this.onWinCallback();
+                break;
+            }
+        }
     };
 
 }

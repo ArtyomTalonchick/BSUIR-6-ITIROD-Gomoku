@@ -39,10 +39,10 @@ class GamePromise extends React.Component {
         }
     };
 
-    onAccept = () =>
+    onAccept = gameId =>
         this.props.history.push({
             pathname: Routes.game,
-            state: {opponentId: this.state.opponentId, instigator: true}
+            state: {gameId, opponentId: this.state.opponentId, instigator: true}
         });
 
 

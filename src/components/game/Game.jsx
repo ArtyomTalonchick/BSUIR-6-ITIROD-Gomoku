@@ -13,6 +13,7 @@ class Game extends React.Component {
         super(props);
 
         this.opponentId = this.props.location.state.opponentId;
+        this.gameId = this.props.location.state.gameId;
 
         const instigator = this.props.location.state.instigator;
         this.pointColor = instigator ? COLORS.WHITE_POINT : COLORS.BLACK_POINT;
@@ -26,8 +27,9 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        this.detachListener = gameServices.onNewOpponentMove(this.opponentId,
-            this.context.currentUser?.id, this.onNewOpponentMove);
+        this.id = this.context.currentUser?.id;
+        this.detachMoveListener = gameServices.onNewOpponentMove(this.opponentId, this.id, this.onNewOpponentMove);
+        this.detachDefeatListener = gameServices.onRegisterDefeat(this.opponentId, this.gameId, this.onDefeat);
         if (!this.props.location.state.instigator) {
             // TODO remove magic number
             this.onNewMove(7, 7);
@@ -36,7 +38,8 @@ class Game extends React.Component {
     }
 
     componentWillUnmount() {
-        this.detachListener && this.detachListener();
+        this.detachMoveListener && this.detachMoveListener();
+        this.detachDefeatListener && this.detachDefeatListener();
     }
 
     onNewOpponentMove = (x, y) => {
@@ -45,7 +48,19 @@ class Game extends React.Component {
 
     onNewMove = (x, y) => {
         this.setState({canvasEnabled: false});
-        gameServices.newMove(this.opponentId, this.context.currentUser?.id, x, y);
+        gameServices.newMove(this.opponentId, this.id, x, y);
+    };
+
+    // TODO
+    onWin = () => {
+        console.log('WIN');
+        gameServices.registerWin(this.id, this.opponentId, this.gameId);
+    };
+
+    // TODO
+    onDefeat = () => {
+        console.log('DEFEAT');
+        gameServices.registerDefeat(this.id, this.opponentId, this.gameId);
     };
 
     render() {
@@ -58,6 +73,7 @@ class Game extends React.Component {
                     onNewMove={this.onNewMove}
                     move={this.state.move}
                     opponentMove={this.state.opponentMove}
+                    onWin={this.onWin}
                 />
             </div>
         );

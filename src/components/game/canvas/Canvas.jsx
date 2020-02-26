@@ -60,7 +60,7 @@ export default class Canvas extends React.Component {
     };
 
     initIntersections = () => {
-        this.intersections = new Intersections(FIELD_SIZE, this.canvas, this.props.pointColor);
+        this.intersections = new Intersections(FIELD_SIZE, this.canvas, this.props.pointColor, this.props.onWin);
     };
 
     updateCanvasSize = () => {
