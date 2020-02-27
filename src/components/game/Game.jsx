@@ -6,6 +6,7 @@ import gameServices from '../../services/gameServices';
 import {AuthContext} from '../AuthProvider';
 import Canvas from './canvas/Canvas';
 import {COLORS} from './canvas/constants';
+import Alert from '../alert/Alert';
 
 class Game extends React.Component {
 
@@ -51,17 +52,25 @@ class Game extends React.Component {
         gameServices.newMove(this.opponentId, this.id, x, y);
     };
 
-    // TODO
     onWin = () => {
-        console.log('WIN');
+        const alert = {
+            title: 'You win!',
+            variant: 'primary'
+        };
+        this.setState({alert});
         gameServices.registerWin(this.id, this.opponentId, this.gameId);
     };
 
-    // TODO
     onDefeat = () => {
-        console.log('DEFEAT');
+        const alert = {
+            title: 'You defeat',
+            variant: 'error'
+        };
+        this.setState({alert});
         gameServices.registerDefeat(this.id, this.opponentId, this.gameId);
     };
+
+    onCloseAlert = () => this.setState({alert: null, canvasEnabled: false});
 
     render() {
         return (
@@ -75,6 +84,17 @@ class Game extends React.Component {
                     opponentMove={this.state.opponentMove}
                     onWin={this.onWin}
                 />
+                {this.state.alert &&
+                <Alert
+                    {...this.state.alert}
+                    controls=
+                        {<>
+                            <button onClick={this.onCloseAlert}>
+                                Ok
+                            </button>
+                        </>}
+                />
+                }
             </div>
         );
     }

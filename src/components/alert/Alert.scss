@@ -43,6 +43,14 @@ div.alert-container {
       display: flex;
       justify-content: space-between;
       margin-top: 20px;
+
+      :first-child {
+        margin-right: auto;
+      }
+
+      :last-child {
+        margin-left: auto;
+      }
     }
 
     &.error {
