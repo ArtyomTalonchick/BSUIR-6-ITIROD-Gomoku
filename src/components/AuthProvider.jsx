@@ -1,6 +1,5 @@
 import React from 'react';
-import firebaseApp from '../firebaseApp';
-import userServices from '../services/userServices';
+import authenticationServices from '../services/authenticationServices';
 
 export const AuthContext = React.createContext();
 
@@ -13,21 +12,12 @@ export default class AuthProvider extends React.Component {
     }
 
     componentDidMount() {
-        firebaseApp.auth().onAuthStateChanged(this.setCurrentUser);
+        authenticationServices.onAuthStateChanged(currentUser => this.setState({currentUser}));
     }
 
     componentWillUnmount() {
-        this.detachListener();
+        authenticationServices.detachListeners();
     }
-
-    setCurrentUser = user => {
-        if (user) {
-            this.detachListener =
-                userServices.onUserUpdate(user.uid, dbUser => this.setState({currentUser: dbUser}));
-        } else {
-            this.setState({currentUser: null});
-        }
-    };
 
     render() {
         return (
