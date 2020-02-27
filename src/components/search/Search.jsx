@@ -6,6 +6,7 @@ import SearchPreview from './preview/SearchPreview';
 import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
 import GamePromise from '../gamePromise/GamePromise';
+import {AuthContext} from '../AuthProvider';
 
 export default class Search extends React.Component {
 
@@ -31,7 +32,11 @@ export default class Search extends React.Component {
     getUsersFromSearch = () =>
         this.state.users.filter(u => u.name.toUpperCase().includes(this.state.searchValue.toUpperCase()));
 
-    onChallenge = user => this.setState({selectedOpponent: user});
+    onChallenge = user => {
+        if (user.id !== this.context.currentUser.id) {
+            this.setState({selectedOpponent: user});
+        }
+    };
 
     render() {
         return (
@@ -47,3 +52,5 @@ export default class Search extends React.Component {
         );
     }
 }
+
+Search.contextType = AuthContext;
