@@ -31,9 +31,9 @@ class GamePromise extends React.Component {
     sendRequestToOpponent = () => {
         this.setState({opponentId: this.props.opponent?.id, loading: true});
         if (this.props.opponent) {
-            gameServices.toChallenge(this.props.opponent.id, this.context.currentUser?.id)
+            gameServices.createGameRequest(this.props.opponent.id, this.context.currentUser?.id)
                 .then(() => {
-                    this.detachListener = gameServices.onChallengeStatusUpdate(this.props.opponent.id,
+                    this.detachListener = gameServices.onGameRequestStatusUpdate(this.props.opponent.id,
                         this.context.currentUser?.id, this.onAccept, this.onRefuse);
                 });
         }
@@ -52,7 +52,7 @@ class GamePromise extends React.Component {
     };
 
     onCancel = () => {
-        gameServices.cancelChallenge(this.props.opponent.id, this.context.currentUser?.id)
+        gameServices.cancelGameRequest(this.props.opponent.id, this.context.currentUser?.id)
             .then(this.props.onCancel);
     };
 

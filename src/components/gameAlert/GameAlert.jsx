@@ -18,7 +18,7 @@ class GameAlert extends React.Component {
 
     componentDidMount() {
         this.detachListener =
-            gameServices.onNewChallenge(this.context.currentUser?.id, this.onNewOpponent, this.onRemoveOpponent);
+            gameServices.onNewGameRequest(this.context.currentUser?.id, this.onNewOpponent, this.onRemoveOpponent);
     }
 
     componentWillUnmount() {
@@ -30,7 +30,7 @@ class GameAlert extends React.Component {
     onRemoveOpponent = () => this.setState({opponentId: undefined});
 
     onAccept = () => {
-        const gameId = gameServices.acceptChallenge(this.context.currentUser?.id, this.state.opponentId);
+        const gameId = gameServices.acceptGameRequest(this.context.currentUser?.id, this.state.opponentId);
         this.props.history.push({
             pathname: Routes.game,
             state: {gameId, opponentId: this.state.opponentId, instigator: false}
@@ -38,7 +38,7 @@ class GameAlert extends React.Component {
     };
 
     onRefuse = () => {
-        gameServices.cancelChallenge(this.context.currentUser?.id, this.state.opponentId);
+        gameServices.cancelGameRequest(this.context.currentUser?.id, this.state.opponentId);
     };
 
     render() {

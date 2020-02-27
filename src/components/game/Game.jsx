@@ -32,7 +32,7 @@ class Game extends React.Component {
         this.id = this.context.currentUser?.id;
 
         this.detachMoveListener = gameServices.onNewOpponentMove(this.opponentId, this.id, this.onNewOpponentMove);
-        this.detachDefeatListener = gameServices.onChangeGameOutcome(
+        this.detachDefeatListener = gameServices.onChangeGameResult(
             this.opponentId, this.gameId, this.onWin, this.onDefeat);
         window.addEventListener('beforeunload', this.onLeave);
 

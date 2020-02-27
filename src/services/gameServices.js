@@ -1,74 +1,73 @@
 import firebaseApp from '../firebaseApp';
 
-const GAME_STATUSES = {
+const GAME_REQUEST_STATUSES = {
     WAIT: 'WAIT',
     ACCEPT: 'ACCEPT',
     REFUSE: null
 };
 
-const HISTORY_STATUSES = {
+const GAME_RESULT_STATUSES = {
     WIN: 'WIN',
     DEFEAT: 'DEFEAT',
     DRAW: 'DRAW'
 };
 
-const getGameRef = (id1, id2) => firebaseApp.database().ref(`users/${id1}/games/${id2}`);
+const getGameRequestRef = (id1, id2) => firebaseApp.database().ref(`users/${id1}/games/${id2}`);
 
-const getHistoryRef = (id, gameId) => firebaseApp.database().ref(`users/${id}/history/${gameId}`);
+const getGameResultRef = (id, gameId) => firebaseApp.database().ref(`users/${id}/history/${gameId}`);
 
-const updateChallengeStatus = (opponentId, id, status) => getGameRef(opponentId, id).set(status);
+const updateGameRequestStatus = (opponentId, id, status) => getGameRequestRef(opponentId, id).set(status);
 
-const toChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, GAME_STATUSES.WAIT);
+const createGameRequest = (opponentId, id) => updateGameRequestStatus(opponentId, id, GAME_REQUEST_STATUSES.WAIT);
 
-const cancelChallenge = (opponentId, id) => updateChallengeStatus(opponentId, id, GAME_STATUSES.REFUSE);
+const cancelGameRequest = (opponentId, id) => updateGameRequestStatus(opponentId, id, GAME_REQUEST_STATUSES.REFUSE);
 
-const acceptChallenge = (opponentId, id) => {
+const acceptGameRequest = (opponentId, id) => {
     const gameId = Date.now();
-    const status = `${GAME_STATUSES.ACCEPT}-${gameId}`;
-    updateChallengeStatus(id, opponentId, status)
-        .then(() => updateChallengeStatus(opponentId, id, status));
+    const status = `${GAME_REQUEST_STATUSES.ACCEPT}-${gameId}`;
+    updateGameRequestStatus(id, opponentId, status)
+        .then(() => updateGameRequestStatus(opponentId, id, status));
     return gameId;
 };
 
-const newMove = (opponentId, id, x, y) => updateChallengeStatus(opponentId, id, `${x}-${y}`);
+const newMove = (opponentId, id, x, y) => updateGameRequestStatus(opponentId, id, `${x}-${y}`);
 
 const registerWin = (id, opponentId, gameId) => {
-    getHistoryRef(id, gameId).set({opponentId, status: HISTORY_STATUSES.WIN});
-    cancelChallenge(opponentId, id);
+    getGameResultRef(id, gameId).set({opponentId, status: GAME_RESULT_STATUSES.WIN});
+    cancelGameRequest(opponentId, id);
 };
 
 const registerDefeat = (id, opponentId, gameId) => {
-    getHistoryRef(id, gameId).set({opponentId, status: HISTORY_STATUSES.DEFEAT});
-    cancelChallenge(opponentId, id);
+    getGameResultRef(id, gameId).set({opponentId, status: GAME_RESULT_STATUSES.DEFEAT});
+    cancelGameRequest(opponentId, id);
 };
 
-
-const onChallengeStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
+const onGameRequestStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
     const fullCallback = response => {
         const responseValue = response.val();
-        const r = new RegExp(`^${GAME_STATUSES.ACCEPT}-(\\d+)`);
+        const r = new RegExp(`^${GAME_REQUEST_STATUSES.ACCEPT}-(\\d+)`);
         if (r.test(responseValue)) {
             acceptCallback(responseValue.match(r)[1]);
         } else if (!response.val()) {
             refuseCallback();
         }
     };
-    getGameRef(opponentId, id).on('value', fullCallback);
+    getGameRequestRef(opponentId, id).on('value', fullCallback);
 
-    return () => getGameRef(opponentId, id).off('value', fullCallback);
+    return () => getGameRequestRef(opponentId, id).off('value', fullCallback);
 };
 
-const onNewChallenge = (id, onCreatedCallback, onRemovedCallback) => {
+const onNewGameRequest = (id, onCreatedCallback, onRemovedCallback) => {
     let previousOpponentId;
     const fullCallback = response => {
         const games = response.val();
         if (games) {
             const opponentId = Object.keys(games)[0];
             const gameStatus = games[opponentId];
-            if (opponentId !== previousOpponentId && gameStatus === GAME_STATUSES.WAIT) {
+            if (opponentId !== previousOpponentId && gameStatus === GAME_REQUEST_STATUSES.WAIT) {
                 onCreatedCallback(opponentId);
                 previousOpponentId = opponentId;
-            } else if (opponentId === previousOpponentId && gameStatus !== GAME_STATUSES.WAIT) {
+            } else if (opponentId === previousOpponentId && gameStatus !== GAME_REQUEST_STATUSES.WAIT) {
                 onRemovedCallback();
                 previousOpponentId = undefined;
             }
@@ -93,33 +92,33 @@ const onNewOpponentMove = (opponentId, id, callback) => {
         }
     };
 
-    getGameRef(id, opponentId).on('value', fullCallback);
-    return () => getGameRef(id, opponentId).off('value', fullCallback);
+    getGameRequestRef(id, opponentId).on('value', fullCallback);
+    return () => getGameRequestRef(id, opponentId).off('value', fullCallback);
 };
 
-const onChangeGameOutcome = (opponentId, gameId, onWin, onDefeat) => {
+const onChangeGameResult = (opponentId, gameId, onWin, onDefeat) => {
     const fullCallback = response => {
         const status = response.val()?.status;
-        if (status === HISTORY_STATUSES.WIN) {
+        if (status === GAME_RESULT_STATUSES.WIN) {
             onDefeat();
-        } else if (status === HISTORY_STATUSES.DEFEAT) {
+        } else if (status === GAME_RESULT_STATUSES.DEFEAT) {
             onWin();
         }
     };
 
-    getHistoryRef(opponentId, gameId).on('value', fullCallback);
-    return () => getHistoryRef(opponentId, gameId).off('value', fullCallback);
+    getGameResultRef(opponentId, gameId).on('value', fullCallback);
+    return () => getGameResultRef(opponentId, gameId).off('value', fullCallback);
 };
 
 export default {
-    toChallenge,
-    cancelChallenge,
-    acceptChallenge,
+    createGameRequest,
+    cancelGameRequest,
+    acceptGameRequest,
     newMove,
     registerWin,
     registerDefeat,
-    onChallengeStatusUpdate,
-    onNewChallenge,
+    onGameRequestStatusUpdate,
+    onNewGameRequest,
     onNewOpponentMove,
-    onChangeGameOutcome
+    onChangeGameResult
 }
