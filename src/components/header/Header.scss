@@ -15,12 +15,6 @@ div.header-container {
       margin: auto auto auto 20px;
     }
 
-    i.fa-bars {
-      @media (min-width: $smallWidth) {
-        display: none;
-      }
-    }
-
     div.buttons-container {
       background: $primary;
       display: flex;
@@ -36,25 +30,23 @@ div.header-container {
 
     i {
       font-size: 20px;
-      margin: auto;
-      color: $textLight;
-
-      @media (max-width: $smallWidth) {
-        margin-right: 10px;
-      }
-    }
-
-    i.fa-sign-out {
-      font-size: 20px;
       margin: auto 20px auto auto;
       color: $textLight;
 
-      @media (max-width: $smallWidth) {
-        margin-left: 10px;
-      }
-
       &:hover {
         cursor: pointer;
+      }
+
+      &.fa-sign-out {
+        @media (max-width: $smallWidth) {
+          margin-left: 10px;
+        }
+      }
+
+      &.fa-bars {
+        @media (min-width: $smallWidth) {
+          display: none;
+        }
       }
     }
   }
@@ -67,12 +59,13 @@ div.header-container {
     right: 0;
     display: flex;
     flex-direction: column;
+
+    &.displayNone {
+      display: none;
+    }
+
     @media (min-width: $smallWidth) {
       display: none;
     }
-  }
-
-  div.displayNone {
-    display: none;
   }
 }

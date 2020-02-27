@@ -16,11 +16,23 @@ export default class Header extends React.Component {
         }
     }
 
-    signOut = () => authenticationServices.signOut();
+    componentDidMount() {
+        window.addEventListener('click', this.onWindowClick);
+    }
 
-    showMovingBar = () => {
-        this.setState({movingBar: !this.state.movingBar});
+    componentWillUnmount() {
+        window.removeEventListener('click', this.onWindowClick);
+    }
+
+    onWindowClick = event => {
+        if (event.target.id === 'bar-icon') {
+            this.setState({movingBar: true});
+        } else {
+            this.setState({movingBar: false});
+        }
     };
+
+    signOut = () => authenticationServices.signOut();
 
     buttons =
         <>
@@ -37,7 +49,7 @@ export default class Header extends React.Component {
             <div className='header-container'>
                 <div className='main-row'>
                     <img src={MainLabel} alt=''/>
-                    <i className='fa fa-bars' onClick={this.showMovingBar}/>
+                    <i className='fa fa-bars' id='bar-icon'/>
                     <div className='buttons-container'>
                         {this.buttons}
                     </div>
