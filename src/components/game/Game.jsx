@@ -23,14 +23,19 @@ class Game extends React.Component {
         this.state = {
             move: undefined,
             opponentMove: undefined,
-            canvasEnabled: false
+            canvasEnabled: false,
+            gameOver: false
         }
     }
 
     componentDidMount() {
         this.id = this.context.currentUser?.id;
+
         this.detachMoveListener = gameServices.onNewOpponentMove(this.opponentId, this.id, this.onNewOpponentMove);
-        this.detachDefeatListener = gameServices.onRegisterDefeat(this.opponentId, this.gameId, this.onDefeat);
+        this.detachDefeatListener = gameServices.onChangeGameOutcome(
+            this.opponentId, this.gameId, this.onWin, this.onDefeat);
+        window.addEventListener('beforeunload', this.onLeave);
+
         if (!this.props.location.state.instigator) {
             // TODO remove magic number
             this.onNewMove(7, 7);
@@ -41,7 +46,15 @@ class Game extends React.Component {
     componentWillUnmount() {
         this.detachMoveListener && this.detachMoveListener();
         this.detachDefeatListener && this.detachDefeatListener();
+        this.onLeave();
+        window.removeEventListener('beforeunload', this.onLeave);
     }
+
+    onLeave = () => {
+        if (!this.state.gameOver) {
+            this.onDefeat();
+        }
+    };
 
     onNewOpponentMove = (x, y) => {
         this.setState({opponentMove: {x, y}, canvasEnabled: true});
@@ -57,7 +70,7 @@ class Game extends React.Component {
             title: 'You win!',
             variant: 'primary'
         };
-        this.setState({alert});
+        this.setState({alert, gameOver: true});
         gameServices.registerWin(this.id, this.opponentId, this.gameId);
     };
 
@@ -66,7 +79,7 @@ class Game extends React.Component {
             title: 'You defeat',
             variant: 'error'
         };
-        this.setState({alert});
+        this.setState({alert, gameOver: true});
         gameServices.registerDefeat(this.id, this.opponentId, this.gameId);
     };
 

@@ -32,11 +32,15 @@ const acceptChallenge = (opponentId, id) => {
 
 const newMove = (opponentId, id, x, y) => updateChallengeStatus(opponentId, id, `${x}-${y}`);
 
-const registerWin = (id, opponentId, gameId) =>
+const registerWin = (id, opponentId, gameId) => {
     getHistoryRef(id, gameId).set({opponentId, status: HISTORY_STATUSES.WIN});
+    cancelChallenge(opponentId, id);
+};
 
-const registerDefeat = (id, opponentId, gameId) =>
+const registerDefeat = (id, opponentId, gameId) => {
     getHistoryRef(id, gameId).set({opponentId, status: HISTORY_STATUSES.DEFEAT});
+    cancelChallenge(opponentId, id);
+};
 
 
 const onChallengeStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
@@ -93,11 +97,13 @@ const onNewOpponentMove = (opponentId, id, callback) => {
     return () => getGameRef(id, opponentId).off('value', fullCallback);
 };
 
-const onRegisterDefeat = (opponentId, gameId, callback) => {
+const onChangeGameOutcome = (opponentId, gameId, onWin, onDefeat) => {
     const fullCallback = response => {
         const status = response.val()?.status;
         if (status === HISTORY_STATUSES.WIN) {
-            callback();
+            onDefeat();
+        } else if (status === HISTORY_STATUSES.DEFEAT) {
+            onWin();
         }
     };
 
@@ -115,5 +121,5 @@ export default {
     onChallengeStatusUpdate,
     onNewChallenge,
     onNewOpponentMove,
-    onRegisterDefeat
+    onChangeGameOutcome
 }
