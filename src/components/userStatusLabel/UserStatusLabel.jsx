@@ -5,7 +5,7 @@ import './UserStatusLabel.scss';
 export default class UserStatusLabel extends React.Component {
 
     render() {
-        const dateFormatter = new Intl.DateTimeFormat('en', {
+        const dateFormatter = new Intl.DateTimeFormat('ru', {
             year: 'numeric',
             month: 'numeric',
             day: 'numeric',

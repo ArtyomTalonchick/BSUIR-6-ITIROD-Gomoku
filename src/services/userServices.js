@@ -50,6 +50,20 @@ const getUser = uid =>
         .then(response => ({id: uid, ...response.val()} || {}));
 
 
+const onAllUsersUpdate = callback => {
+    const fullCallback = response => callback(unpackUsers(response.val() || {}));
+
+    firebaseApp
+        .database()
+        .ref('users')
+        .on('value', fullCallback);
+
+    return () => firebaseApp
+        .database()
+        .ref('users')
+        .off('value', fullCallback);
+};
+
 const onUserUpdate = (uid, callback) => {
     const fullCallback = response => callback({id: uid, ...response.val()} || {});
     firebaseApp
@@ -68,6 +82,7 @@ export default {
     update,
     updateAvatar,
     onUserUpdate,
+    onAllUsersUpdate,
     getUser,
     getAll
 }

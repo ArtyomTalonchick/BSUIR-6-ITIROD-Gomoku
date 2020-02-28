@@ -23,8 +23,11 @@ export default class Search extends React.Component {
 
     componentDidMount() {
         this.setState({loading: true});
-        userServices.getAll()
-            .then(users => this.setState({loading: false, users}));
+        this.detachUsersListener = userServices.onAllUsersUpdate(users => this.setState({loading: false, users}));
+    }
+
+    componentWillUnmount() {
+        this.detachUsersListener && this.detachUsersListener();
     }
 
     onSearch = value => this.setState({searchValue: value});
