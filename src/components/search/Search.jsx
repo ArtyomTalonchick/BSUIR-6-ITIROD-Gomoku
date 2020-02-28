@@ -7,6 +7,7 @@ import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
 import GamePromise from '../gamePromise/GamePromise';
 import {AuthContext} from '../AuthProvider';
+import userStatuses from '../../constants/userStatuses';
 
 export default class Search extends React.Component {
 
@@ -36,10 +37,15 @@ export default class Search extends React.Component {
         this.state.users.filter(u => u.name.toUpperCase().includes(this.state.searchValue.toUpperCase()));
 
     onChallenge = user => {
-        if (user.id !== this.context.currentUser.id) {
+        if (this.challengePossible(user)) {
             this.setState({selectedOpponent: user});
         }
     };
+
+
+    onCancelChallenge = () => this.setState({selectedOpponent: undefined});
+
+    challengePossible = user => user.id !== this.context.currentUser.id && user.status === userStatuses.ONLINE;
 
     render() {
         return (
@@ -48,9 +54,14 @@ export default class Search extends React.Component {
                 <hr/>
                 {this.state.loading && <Loader/>}
                 {this.getUsersFromSearch().map(user => (
-                    <SearchPreview key={user.id} user={user} onChallenge={() => this.onChallenge(user)}/>
+                    <SearchPreview
+                        key={user.id}
+                        user={user}
+                        onChallenge={() => this.onChallenge(user)}
+                        challengePosseble={this.challengePossible(user)}
+                    />
                 ))}
-                <GamePromise opponent={this.state.selectedOpponent} onCancel={this.onChallenge}/>
+                <GamePromise opponent={this.state.selectedOpponent} onCancel={this.onCancelChallenge}/>
             </div>
         );
     }

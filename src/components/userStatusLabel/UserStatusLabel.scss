@@ -12,10 +12,14 @@ div.user-status-label-container {
       color: #004085;
     }
 
-    &.last-online {
+    &.offline {
       background: #e2e3e5;
       color: #383d41;
       font-size: 12px;
+    }
+    &.is-playing {
+      background: #d4edda;
+      color: #155724;
     }
   }
 

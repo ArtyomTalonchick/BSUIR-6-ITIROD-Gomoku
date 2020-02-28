@@ -5,7 +5,6 @@ import './SearchPreview.scss';
 import {Routes} from '../../../constants/routes';
 import RouteHelper from '../../../helpers/RouteHelper';
 import Image from '../../image/Image';
-import {AuthContext} from '../../AuthProvider';
 import UserStatusLabel from '../../userStatusLabel/UserStatusLabel';
 
 class SearchPreview extends React.Component {
@@ -14,7 +13,6 @@ class SearchPreview extends React.Component {
 
     render() {
         const user = this.props.user;
-        const showChallengeButton = user.id !== this.context.currentUser.id && user.connections;
         return (
             <div className='search-preview-container'>
                 <div className='image' onClick={this.onUserClick}>
@@ -30,7 +28,7 @@ class SearchPreview extends React.Component {
                         <UserStatusLabel user={user}/>
                         <span>{user.name}</span>
                     </div>
-                    {showChallengeButton &&
+                    {this.props.challengePosseble &&
                     <button onClick={this.props.onChallenge}>
                         To challenge
                     </button>
@@ -40,7 +38,5 @@ class SearchPreview extends React.Component {
         );
     }
 }
-
-SearchPreview.contextType = AuthContext;
 
 export default withRouter(SearchPreview)

@@ -7,6 +7,7 @@ import {AuthContext} from '../AuthProvider';
 import Canvas from './canvas/Canvas';
 import {COLORS} from './canvas/constants';
 import Alert from '../alert/Alert';
+import {Routes} from '../../constants/routes';
 
 class Game extends React.Component {
 
@@ -29,6 +30,10 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
+        if (this.context.currentUser.history[this.gameId]) {
+            this.props.history.push(Routes.home);
+        }
+
         this.id = this.context.currentUser?.id;
 
         this.detachMoveListener = gameServices.onNewOpponentMove(this.opponentId, this.id, this.onNewOpponentMove);
@@ -54,6 +59,7 @@ class Game extends React.Component {
         if (!this.state.gameOver) {
             this.onDefeat();
         }
+        gameServices.completeGame(this.id);
     };
 
     onNewOpponentMove = (x, y) => {

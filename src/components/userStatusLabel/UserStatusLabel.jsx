@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './UserStatusLabel.scss';
+import userStatuses from '../../constants/userStatuses';
 
 export default class UserStatusLabel extends React.Component {
 
@@ -13,21 +14,23 @@ export default class UserStatusLabel extends React.Component {
             minute: 'numeric'
         });
 
-
-        const online = this.props.user.connections;
-        const lastOnline = this.props.user.lastOnline && dateFormatter.format(this.props.user.lastOnline);
-
         return (
             <div className='user-status-label-container'>
-                {online &&
+                {this.props.user.status === userStatuses.ONLINE &&
                 <span className='online'>
                     online
                 </span>
                 }
-                {!online && lastOnline &&
-                <span className='last-online'>
-                    {lastOnline}
-                </span>}
+                {this.props.user.status === userStatuses.OFFLINE &&
+                <span className='offline'>
+                    {dateFormatter.format(this.props.user.lastOnline)}
+                </span>
+                }
+                {this.props.user.status === userStatuses.IS_PLAYING &&
+                <span className='is-playing'>
+                    Is playing
+                </span>
+                }
             </div>
         );
     }

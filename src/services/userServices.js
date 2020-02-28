@@ -1,6 +1,21 @@
 import firebaseApp from '../firebaseApp';
+import userStatuses from '../constants/userStatuses';
 
-const unpackUsers = users => Object.entries(users).map(([uid, value]) => ({id: uid, ...value}));
+const getFormattedUser = (user, uid) => {
+    user.id = uid;
+
+    if (!user.connections) {
+        user.status = userStatuses.OFFLINE;
+    } else if (user.games) {
+        user.status = userStatuses.IS_PLAYING;
+    } else {
+        user.status = userStatuses.ONLINE;
+    }
+
+    return user;
+};
+
+const unpackUsers = users => Object.entries(users).map(([uid, user]) => getFormattedUser(user, uid));
 
 const create = (uid, name, email, image) => {
     const user = {};
@@ -58,7 +73,7 @@ const onAllUsersUpdate = callback => {
 };
 
 const onUserUpdate = (uid, callback) => {
-    const fullCallback = response => callback({id: uid, ...response.val()} || {});
+    const fullCallback = response => callback(getFormattedUser(response.val(), uid));
     firebaseApp
         .database()
         .ref(`users/${uid}`)

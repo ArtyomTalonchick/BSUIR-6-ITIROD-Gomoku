@@ -3,6 +3,7 @@ import firebaseApp from '../firebaseApp';
 const GAME_REQUEST_STATUSES = {
     WAIT: 'WAIT',
     ACCEPT: 'ACCEPT',
+    PROCESS: 'PROCESS',
     REFUSE: null
 };
 
@@ -18,9 +19,15 @@ const getGameResultRef = (id, gameId) => firebaseApp.database().ref(`users/${id}
 
 const updateGameRequestStatus = (opponentId, id, status) => getGameRequestRef(opponentId, id).set(status);
 
-const createGameRequest = (opponentId, id) => updateGameRequestStatus(opponentId, id, GAME_REQUEST_STATUSES.WAIT);
+const createGameRequest = (opponentId, id) =>
+    updateGameRequestStatus(opponentId, id, GAME_REQUEST_STATUSES.WAIT)
+        .then(() => updateGameRequestStatus(id, opponentId, GAME_REQUEST_STATUSES.ACCEPT));
 
-const cancelGameRequest = (opponentId, id) => updateGameRequestStatus(opponentId, id, GAME_REQUEST_STATUSES.REFUSE);
+const completeGame = id => firebaseApp.database().ref(`users/${id}/games`).remove();
+
+const cancelGameRequest = (opponentId, id) =>
+    updateGameRequestStatus(opponentId, id, GAME_REQUEST_STATUSES.REFUSE)
+        .then(() => updateGameRequestStatus(id, opponentId, GAME_REQUEST_STATUSES.REFUSE));
 
 const acceptGameRequest = (opponentId, id) => {
     const gameId = Date.now();
@@ -34,12 +41,10 @@ const newMove = (opponentId, id, x, y) => updateGameRequestStatus(opponentId, id
 
 const registerWin = (id, opponentId, gameId) => {
     getGameResultRef(id, gameId).set({opponentId, status: GAME_RESULT_STATUSES.WIN});
-    cancelGameRequest(opponentId, id);
 };
 
 const registerDefeat = (id, opponentId, gameId) => {
     getGameResultRef(id, gameId).set({opponentId, status: GAME_RESULT_STATUSES.DEFEAT});
-    cancelGameRequest(opponentId, id);
 };
 
 const onGameRequestStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
@@ -114,6 +119,7 @@ export default {
     createGameRequest,
     cancelGameRequest,
     acceptGameRequest,
+    completeGame,
     newMove,
     registerWin,
     registerDefeat,
