@@ -17,14 +17,14 @@ div.search-preview-container {
     }
   }
 
-  div.info-block {
+  div.right-block {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
 
-    span {
+    div.info {
       margin-right: auto;
 
       &:hover {
@@ -32,14 +32,14 @@ div.search-preview-container {
       }
     }
 
-    button {
+    :last-child {
       width: max-content;
     }
 
 
-    @media (max-width: $smallWidth) {
+    @media (max-width: $mediumWidth) {
       flex-direction: column;
-      span {
+      div.info {
         margin-right: 0;
       }
     }

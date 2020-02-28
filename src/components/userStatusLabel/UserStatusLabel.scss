@@ -1,0 +1,22 @@
+@import "../../constants/colors";
+@import "../../constants/constants";
+
+div.user-status-label-container {
+
+  span {
+    padding: 0 8px;
+    border-radius: 10px;
+
+    &.online {
+      background: #cce5ff;
+      color: #004085;
+    }
+
+    &.last-online {
+      background: #e2e3e5;
+      color: #383d41;
+      font-size: 12px;
+    }
+  }
+
+}

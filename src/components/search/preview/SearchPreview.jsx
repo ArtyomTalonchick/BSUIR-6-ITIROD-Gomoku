@@ -6,6 +6,7 @@ import {Routes} from '../../../constants/routes';
 import RouteHelper from '../../../helpers/RouteHelper';
 import Image from '../../image/Image';
 import {AuthContext} from '../../AuthProvider';
+import UserStatusLabel from '../../userStatusLabel/UserStatusLabel';
 
 class SearchPreview extends React.Component {
 
@@ -23,10 +24,11 @@ class SearchPreview extends React.Component {
                     />
                 </div>
 
-                <div className='info-block'>
-                    <span onClick={this.onUserClick}>
-                        {user.name}
-                    </span>
+                <div className='right-block'>
+                    <div className='info' onClick={this.onUserClick}>
+                        <UserStatusLabel user={user}/>
+                        <span>{user.name}</span>
+                    </div>
                     {this.props.user.id !== this.context.currentUser.id &&
                     <button onClick={this.props.onChallenge}>
                         To challenge
