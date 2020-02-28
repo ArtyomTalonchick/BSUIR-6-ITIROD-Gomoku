@@ -2,7 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 
 import './Game.scss';
-import gameServices from '../../services/gameServices';
+import GameService from '../../services/GameService';
 import {AuthContext} from '../AuthProvider';
 import Canvas from './canvas/Canvas';
 import {COLORS} from './canvas/constants';
@@ -14,12 +14,9 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
 
-        this.opponentId = this.props.location.state.opponentId;
-        this.gameId = this.props.location.state.gameId;
-
-        const instigator = this.props.location.state.instigator;
-        this.pointColor = instigator ? COLORS.WHITE_POINT : COLORS.BLACK_POINT;
-        this.opponentPointColor = instigator ? COLORS.BLACK_POINT : COLORS.WHITE_POINT;
+        this.instigator = this.props.location.state?.instigator;
+        this.pointColor = this.instigator ? COLORS.WHITE_POINT : COLORS.BLACK_POINT;
+        this.opponentPointColor = this.instigator ? COLORS.BLACK_POINT : COLORS.WHITE_POINT;
 
         this.state = {
             move: undefined,
@@ -30,36 +27,28 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        if (this.context.currentUser.history[this.gameId]) {
+        if (!GameService.gameId) {
             this.props.history.push(Routes.home);
-        }
+        } else {
+            GameService.onNewOpponentMove(this.onNewOpponentMove);
+            GameService.onChangeGameResult(this.onWin, this.onDefeat);
+            window.addEventListener('beforeunload', this.onLeave);
 
-        this.id = this.context.currentUser?.id;
-
-        this.detachMoveListener = gameServices.onNewOpponentMove(this.opponentId, this.id, this.onNewOpponentMove);
-        this.detachDefeatListener = gameServices.onChangeGameResult(
-            this.opponentId, this.gameId, this.onWin, this.onDefeat);
-        window.addEventListener('beforeunload', this.onLeave);
-
-        if (!this.props.location.state.instigator) {
-            // TODO remove magic number
-            this.onNewMove(7, 7);
-            this.setState({move: {x: 7, y: 7}});
+            if (!this.instigator) {
+                // TODO remove magic number
+                this.onNewMove(7, 7);
+                this.setState({move: {x: 7, y: 7}});
+            }
         }
     }
 
     componentWillUnmount() {
-        this.detachMoveListener && this.detachMoveListener();
-        this.detachDefeatListener && this.detachDefeatListener();
         this.onLeave();
         window.removeEventListener('beforeunload', this.onLeave);
     }
 
     onLeave = () => {
-        if (!this.state.gameOver) {
-            this.onDefeat();
-        }
-        gameServices.completeGame(this.id);
+        GameService.completeGame();
     };
 
     onNewOpponentMove = (x, y) => {
@@ -68,7 +57,7 @@ class Game extends React.Component {
 
     onNewMove = (x, y) => {
         this.setState({canvasEnabled: false});
-        gameServices.newMove(this.opponentId, this.id, x, y);
+        GameService.newMove(x, y);
     };
 
     onWin = () => {
@@ -77,7 +66,7 @@ class Game extends React.Component {
             variant: 'primary'
         };
         this.setState({alert, gameOver: true});
-        gameServices.registerWin(this.id, this.opponentId, this.gameId);
+        GameService.registerWin();
     };
 
     onDefeat = () => {
@@ -86,7 +75,7 @@ class Game extends React.Component {
             variant: 'error'
         };
         this.setState({alert, gameOver: true});
-        gameServices.registerDefeat(this.id, this.opponentId, this.gameId);
+        GameService.registerDefeat();
     };
 
     onCloseAlert = () => this.setState({alert: null, canvasEnabled: false});

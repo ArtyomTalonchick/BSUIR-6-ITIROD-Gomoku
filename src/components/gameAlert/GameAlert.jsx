@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 
 import {AuthContext} from '../AuthProvider';
 import Alert from '../alert/Alert';
-import gameServices from '../../services/gameServices';
+import GameService from '../../services/GameService';
 import {Routes} from '../../constants/routes';
 
 class GameAlert extends React.Component {
@@ -17,12 +17,11 @@ class GameAlert extends React.Component {
     }
 
     componentDidMount() {
-        this.detachListener =
-            gameServices.onNewGameRequest(this.context.currentUser?.id, this.onNewOpponent, this.onRemoveOpponent);
+        GameService.onNewGameRequest(this.context.currentUser?.id, this.onNewOpponent, this.onRemoveOpponent);
     }
 
     componentWillUnmount() {
-        this.detachListener();
+        GameService.detachGameRequestListener();
     }
 
     onNewOpponent = opponentId => this.setState({opponentId});
@@ -30,15 +29,12 @@ class GameAlert extends React.Component {
     onRemoveOpponent = () => this.setState({opponentId: undefined});
 
     onAccept = () => {
-        const gameId = gameServices.acceptGameRequest(this.context.currentUser?.id, this.state.opponentId);
-        this.props.history.push({
-            pathname: Routes.game,
-            state: {gameId, opponentId: this.state.opponentId, instigator: false}
-        });
+        GameService.acceptGameRequest(this.context.currentUser.id, this.state.opponentId)
+            .then(() => this.props.history.push({pathname: Routes.game, state: {instigator: false}}));
     };
 
     onRefuse = () => {
-        gameServices.cancelGameRequest(this.context.currentUser?.id, this.state.opponentId);
+        GameService.cancelGameRequest(this.context.currentUser.id, this.state.opponentId);
     };
 
     render() {

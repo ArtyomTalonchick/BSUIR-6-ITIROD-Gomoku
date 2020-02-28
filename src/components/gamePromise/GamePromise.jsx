@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 
 import {AuthContext} from '../AuthProvider';
 import Alert from '../alert/Alert';
-import gameServices from '../../services/gameServices';
+import GameService from '../../services/GameService';
 import Loader from '../loader/Loader';
 import {Routes} from '../../constants/routes';
 
@@ -25,34 +25,34 @@ class GamePromise extends React.Component {
     }
 
     componentWillUnmount() {
-        this.detachListener && this.detachListener();
+        GameService.detachGameRequestStatusListener && GameService.detachGameRequestStatusListener();
     }
 
     sendRequestToOpponent = () => {
         this.setState({opponentId: this.props.opponent?.id, loading: true});
         if (this.props.opponent) {
-            gameServices.createGameRequest(this.props.opponent.id, this.context.currentUser?.id)
+            GameService.createGameRequest(this.props.opponent.id, this.context.currentUser.id)
                 .then(() => {
-                    this.detachListener = gameServices.onGameRequestStatusUpdate(this.props.opponent.id,
-                        this.context.currentUser?.id, this.onAccept, this.onRefuse);
+                    GameService.onGameRequestStatusUpdate(this.props.opponent.id,
+                        this.context.currentUser.id, this.onAccept, this.onRefuse);
                 });
         }
     };
 
-    onAccept = gameId =>
+    onAccept = () =>
         this.props.history.push({
             pathname: Routes.game,
-            state: {gameId, opponentId: this.state.opponentId, instigator: true}
+            state: {instigator: true}
         });
 
 
     onRefuse = () => {
         this.setState({loading: false});
-        this.detachListener && this.detachListener();
+        GameService.detachGameRequestStatusListener && GameService.detachGameRequestStatusListener();
     };
 
     onCancel = () => {
-        gameServices.cancelGameRequest(this.props.opponent.id, this.context.currentUser?.id)
+        GameService.cancelGameRequest(this.props.opponent.id, this.context.currentUser.id)
             .then(this.props.onCancel);
     };
 
