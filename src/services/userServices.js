@@ -34,13 +34,6 @@ const updateAvatar = (uid, file) =>
             })
     );
 
-const getAll = callback =>
-    firebaseApp
-        .database()
-        .ref('users')
-        .once('value')
-        .then(response => unpackUsers(response.val() || {}));
-
 
 const getUser = uid =>
     firebaseApp
@@ -84,5 +77,4 @@ export default {
     onUserUpdate,
     onAllUsersUpdate,
     getUser,
-    getAll
 }

@@ -14,6 +14,7 @@ class SearchPreview extends React.Component {
 
     render() {
         const user = this.props.user;
+        const showChallengeButton = user.id !== this.context.currentUser.id && user.connections;
         return (
             <div className='search-preview-container'>
                 <div className='image' onClick={this.onUserClick}>
@@ -29,7 +30,7 @@ class SearchPreview extends React.Component {
                         <UserStatusLabel user={user}/>
                         <span>{user.name}</span>
                     </div>
-                    {this.props.user.id !== this.context.currentUser.id &&
+                    {showChallengeButton &&
                     <button onClick={this.props.onChallenge}>
                         To challenge
                     </button>
