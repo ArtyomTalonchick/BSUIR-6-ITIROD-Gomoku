@@ -13,8 +13,9 @@ div.profile-container {
 
   div.left-block {
     margin-right: 20px;
+    text-align: center;
 
-    label {
+    .upload-ing-button {
       display: block;
       width: max-content;
       margin: 20px auto auto auto;
@@ -34,6 +35,10 @@ div.profile-container {
       }
     }
 
+    button.to-challenge {
+      margin-top: 20px;
+    }
+
   }
 
   div.right-block {
@@ -49,6 +54,11 @@ div.profile-container {
         }
       }
     }
+
+    @media (max-width: $mediumWidth) {
+      margin-top: 20px;
+    }
+
   }
 
 

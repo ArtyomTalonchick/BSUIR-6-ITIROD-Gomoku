@@ -9,6 +9,8 @@ import {AuthContext} from '../AuthProvider';
 import Image from '../image/Image';
 import Popup from '../popup/Popup';
 import UserStatusLabel from '../userStatusLabel/UserStatusLabel';
+import GamePromise from '../gamePromise/GamePromise';
+import userStatuses from '../../constants/userStatuses';
 
 class Profile extends React.Component {
 
@@ -28,9 +30,13 @@ class Profile extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
             this.updateUser();
         }
+    }
+
+    componentWillUnmount() {
+        // this.detachListener && this.detachListener();
     }
 
     updateUser = () => {
@@ -40,8 +46,13 @@ class Profile extends React.Component {
             this.setState({user: this.currentUser, loading: false, canEdit: true});
         } else {
             this.setState({loading: true});
-            userServices.getUser(id)
-                .then(user => this.setState({user, loading: false}));
+            this.detachListener = userServices.onUserUpdate(id, this.onUserUpdate);
+        }
+    };
+
+    onUserUpdate = user => {
+        if (!this.state.challenge) {
+            this.setState({user, loading: false});
         }
     };
 
@@ -63,8 +74,13 @@ class Profile extends React.Component {
             .then(() => this.setState({imgLoading: false}));
     };
 
+    onChallenge = () => this.setState({challenge: true});
+
+    onCancelChallenge = () => this.setState({challenge: undefined});
+
     render() {
         const user = this.state.user;
+        const challengePossible = user.id !== this.context.currentUser.id && user.status === userStatuses.ONLINE;
         const formFields = {
             name: {
                 label: 'Name',
@@ -85,7 +101,7 @@ class Profile extends React.Component {
                                 width='250px'
                             />
                             {this.state.canEdit &&
-                            <label>
+                            <label className='upload-ing-button'>
                                 <span>
                                     Change
                                 </span>
@@ -96,6 +112,11 @@ class Profile extends React.Component {
                                 />
                             </label>
                             }
+                            {challengePossible &&
+                            <button className='to-challenge' onClick={this.onChallenge}>
+                                To challenge
+                            </button>
+                            }
                         </div>
                         <div className='right-block'>
                             <UserStatusLabel user={user}/>
@@ -104,18 +125,19 @@ class Profile extends React.Component {
                                 {this.state.canEdit && <i className='fa fa-edit' onClick={this.onEditMode}/>}
                             </div>
                         </div>
-                        {this.state.editMode &&
-                        <Popup>
-                            <Form
-                                disabled={!this.state.canEdit}
-                                fields={formFields}
-                                onSubmit={this.onSaveChanges}
-                                submitText='Save'
-                            />
-                        </Popup>
-                        }
                     </>
                 }
+                {this.state.editMode &&
+                <Popup>
+                    <Form
+                        disabled={!this.state.canEdit}
+                        fields={formFields}
+                        onSubmit={this.onSaveChanges}
+                        submitText='Save'
+                    />
+                </Popup>
+                }
+                <GamePromise opponent={this.state.challenge && user} onCancel={this.onCancelChallenge}/>
             </div>
         );
     }

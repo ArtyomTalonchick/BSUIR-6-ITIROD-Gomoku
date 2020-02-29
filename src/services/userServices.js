@@ -61,28 +61,17 @@ const getUser = uid =>
 const onAllUsersUpdate = callback => {
     const fullCallback = response => callback(unpackUsers(response.val() || {}));
 
-    firebaseApp
-        .database()
-        .ref('users')
-        .on('value', fullCallback);
-
-    return () => firebaseApp
-        .database()
-        .ref('users')
-        .off('value', fullCallback);
+    const ref = firebaseApp.database().ref('users');
+    ref.on('value', fullCallback);
+    return () => ref.off('value', fullCallback);
 };
 
 const onUserUpdate = (uid, callback) => {
     const fullCallback = response => callback(getFormattedUser(response.val(), uid));
-    firebaseApp
-        .database()
-        .ref(`users/${uid}`)
-        .on('value', fullCallback);
 
-    return () => firebaseApp
-        .database()
-        .ref(`users/${uid}`)
-        .off('value', fullCallback);
+    const ref = firebaseApp.database().ref(`users/${uid}`);
+    ref.on('value', fullCallback);
+    return () => ref.off('value', fullCallback);
 };
 
 export default {
