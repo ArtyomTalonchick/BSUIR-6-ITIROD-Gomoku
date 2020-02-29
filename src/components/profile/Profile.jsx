@@ -7,8 +7,8 @@ import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
 import {AuthContext} from '../AuthProvider';
 import Image from '../image/Image';
-import Login from "../login/Login";
-import Popup from "../popup/Popup";
+import Popup from '../popup/Popup';
+import UserStatusLabel from '../userStatusLabel/UserStatusLabel';
 
 class Profile extends React.Component {
 
@@ -45,8 +45,10 @@ class Profile extends React.Component {
         }
     };
 
-    onSubmit = fields => {
-        this.setState({loading: true});
+    onEditMode = () => this.setState({editMode: true});
+
+    onSaveChanges = fields => {
+        this.setState({loading: true, editMode: false});
         const updates = {};
         Object.entries(fields).forEach(([name, body]) => updates[name] = body.value);
 
@@ -75,7 +77,7 @@ class Profile extends React.Component {
                     <Loader/>
                     :
                     <>
-                        <div className='image-block'>
+                        <div className='left-block'>
                             <Image
                                 loading={this.state.imgLoading}
                                 src={user.img}
@@ -95,12 +97,23 @@ class Profile extends React.Component {
                             </label>
                             }
                         </div>
-                        <Form
-                            disabled={!this.state.canEdit}
-                            fields={formFields}
-                            onSubmit={this.onSubmit}
-                            submitText='Save'
-                        />
+                        <div className='right-block'>
+                            <UserStatusLabel user={user}/>
+                            <div className='name'>
+                                {user.name}
+                                {this.state.canEdit && <i className='fa fa-edit' onClick={this.onEditMode}/>}
+                            </div>
+                        </div>
+                        {this.state.editMode &&
+                        <Popup>
+                            <Form
+                                disabled={!this.state.canEdit}
+                                fields={formFields}
+                                onSubmit={this.onSaveChanges}
+                                submitText='Save'
+                            />
+                        </Popup>
+                        }
                     </>
                 }
             </div>

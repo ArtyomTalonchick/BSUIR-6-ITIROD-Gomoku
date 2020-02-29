@@ -3,15 +3,15 @@
 
 div.profile-container {
   display: flex;
-  justify-content: space-evenly;
-  width: min-content;
+  width: 50%;
+  min-width: fit-content;
 
   @media (max-width: $mediumWidth) {
     flex-direction: column;
     align-items: center;
   }
 
-  div.image-block {
+  div.left-block {
     margin-right: 20px;
 
     label {
@@ -36,9 +36,19 @@ div.profile-container {
 
   }
 
-  button {
-    display: block;
-    margin: 0 auto;
+  div.right-block {
+    flex-grow: 1;
+
+    div.name {
+      display: flex;
+      justify-content: space-between;
+
+      i.fa-edit {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
   }
 
 

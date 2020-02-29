@@ -55,7 +55,7 @@ const getUser = uid =>
         .database()
         .ref(`users/${uid}`)
         .once('value')
-        .then(response => ({id: uid, ...response.val()} || {}));
+        .then(response => getFormattedUser(response.val(), uid));
 
 
 const onAllUsersUpdate = callback => {
