@@ -49,7 +49,7 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <div className='search-container'>
+            <div className='search-container blank'>
                 <SearchHeader onSubmit={this.onSearch}/>
                 <hr/>
                 {this.state.loading && <Loader/>}

@@ -82,7 +82,7 @@ class Game extends React.Component {
 
     render() {
         return (
-            <div className='game-container'>
+            <div className='game-container blank'>
                 <Canvas
                     enabled={this.state.canvasEnabled}
                     pointColor={this.pointColor}

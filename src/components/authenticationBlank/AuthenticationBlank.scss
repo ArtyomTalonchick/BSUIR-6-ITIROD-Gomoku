@@ -12,11 +12,7 @@ div.authentication-blank-container {
   align-items: center;
 
   div.form {
-    background: $surface;
-    min-width: min-content;
-    padding: 20px;
-    border: 1px $grayLight solid;
-    border-radius: 17px;
+    width: min-content;
   }
 
 }

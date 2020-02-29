@@ -4,6 +4,7 @@
 div.profile-container {
   display: flex;
   justify-content: space-evenly;
+  width: min-content;
 
   @media (max-width: $mediumWidth) {
     flex-direction: column;
@@ -11,6 +12,7 @@ div.profile-container {
   }
 
   div.image-block {
+    margin-right: 20px;
 
     label {
       display: block;
