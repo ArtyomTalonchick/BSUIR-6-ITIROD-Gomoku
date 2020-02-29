@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom';
 import Form from '../form/Form';
 import {Routes} from '../../constants/routes';
 import authenticationServices from '../../services/authenticationServices';
-import Loader from "../loader/Loader";
+import Loader from '../loader/Loader';
+import Popup from '../popup/Popup';
 
 const FIELDS = {
     name: {label: 'Name'},
@@ -40,19 +41,24 @@ export default class Registration extends React.Component {
     };
 
     render() {
-        return this.state.loading ?
-            <Loader/>
-            :
-            <Form
-                error={this.state.error}
-                title='Registration'
-                fields={this.state.fields}
-                onSubmit={this.onSubmit}
-                additionalControl={(
-                    <Link to={Routes.login}>
-                        To Login
-                    </Link>
-                )}
-            />;
+        return (
+            <Popup>
+                {this.state.loading ?
+                    <Loader/>
+                    :
+                    <Form
+                        error={this.state.error}
+                        title='Registration'
+                        fields={this.state.fields}
+                        onSubmit={this.onSubmit}
+                        additionalControl={(
+                            <Link to={Routes.login}>
+                                To Login
+                            </Link>
+                        )}
+                    />
+                }
+            </Popup>
+        );
     }
 }

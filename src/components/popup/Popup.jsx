@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './AuthenticationBlank.scss';
+import './Popup.scss';
 
-export default class AuthenticationBlank extends React.Component {
+export default class Popup extends React.Component {
 
     render() {
         return (

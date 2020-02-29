@@ -7,6 +7,8 @@ import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
 import {AuthContext} from '../AuthProvider';
 import Image from '../image/Image';
+import Login from "../login/Login";
+import Popup from "../popup/Popup";
 
 class Profile extends React.Component {
 

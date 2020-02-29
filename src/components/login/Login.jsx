@@ -5,6 +5,7 @@ import Form from '../form/Form';
 import {Routes} from '../../constants/routes';
 import authenticationServices from '../../services/authenticationServices';
 import Loader from '../loader/Loader';
+import Popup from '../popup/Popup';
 
 const FIELDS = {
     email: {label: 'Email'},
@@ -34,19 +35,24 @@ export default class Login extends React.Component {
     };
 
     render() {
-        return this.state.loading ?
-            <Loader/>
-            :
-            <Form
-                error={this.state.error}
-                title='Login'
-                fields={this.state.fields}
-                onSubmit={this.onSubmit}
-                additionalControl={(
-                    <Link to={Routes.registration}>
-                        To Registration
-                    </Link>
-                )}
-            />;
+        return (
+            <Popup>
+                {this.state.loading ?
+                    <Loader/>
+                    :
+                    <Form
+                        error={this.state.error}
+                        title='Login'
+                        fields={this.state.fields}
+                        onSubmit={this.onSubmit}
+                        additionalControl={(
+                            <Link to={Routes.registration}>
+                                To Registration
+                            </Link>
+                        )}
+                    />
+                }
+            </Popup>
+        );
     }
 }
