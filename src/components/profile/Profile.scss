@@ -12,7 +12,6 @@ div.profile-container {
   }
 
   div.left-block {
-    margin-right: 20px;
     text-align: center;
 
     .upload-ing-button {
@@ -53,10 +52,19 @@ div.profile-container {
           cursor: pointer;
         }
       }
+
+      @media (max-width: $mediumWidth) {
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: $mediumWidth) {
+      margin-left: 20px;
     }
 
     @media (max-width: $mediumWidth) {
       margin-top: 20px;
+      text-align: center;
     }
 
   }
