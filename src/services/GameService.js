@@ -1,16 +1,11 @@
 import firebaseApp from '../firebaseApp';
+import gameResultStatuses from '../constants/gameResultStatuses';
 
 const GAME_REQUEST_STATUSES = {
     WAIT: 'WAIT',
     ACCEPT: 'ACCEPT',
     PROCESS: 'PROCESS',
     REFUSE: null
-};
-
-const GAME_RESULT_STATUSES = {
-    WIN: 'WIN',
-    DEFEAT: 'DEFEAT',
-    DRAW: 'DRAW'
 };
 
 export default class {
@@ -27,7 +22,7 @@ export default class {
 
     static getGameRequestRef = (id1, id2) => firebaseApp.database().ref(`users/${id1}/games/${id2}`);
 
-    static getGameResultRef = (id) => firebaseApp.database().ref(`users/${id}/history/${this.gameId}`);
+    static getGameResultRef = (id) => firebaseApp.database().ref(`histories/${id}/${this.gameId}`);
 
     static updateGameRequestStatus = (opponentId, id, status) => this.getGameRequestRef(opponentId, id).set(status);
 
@@ -75,10 +70,10 @@ export default class {
     static newMove = (x, y) => this.updateGameRequestStatus(this.opponentId, this.userId, `${x}-${y}`);
 
     static registerWin = () =>
-        this.getGameResultRef(this.userId).set({opponentId: this.opponentId, status: GAME_RESULT_STATUSES.WIN});
+        this.getGameResultRef(this.userId).set({opponentId: this.opponentId, status: gameResultStatuses.WIN});
 
     static registerDefeat = () =>
-        this.getGameResultRef(this.userId).set({opponentId: this.opponentId, status: GAME_RESULT_STATUSES.DEFEAT});
+        this.getGameResultRef(this.userId).set({opponentId: this.opponentId, status: gameResultStatuses.DEFEAT});
 
     static onGameRequestStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
         const fullCallback = response => {
@@ -140,9 +135,9 @@ export default class {
     static onChangeGameResult = (onWin, onDefeat) => {
         const fullCallback = response => {
             const status = response.val()?.status;
-            if (status === GAME_RESULT_STATUSES.WIN) {
+            if (status === gameResultStatuses.WIN) {
                 onDefeat();
-            } else if (status === GAME_RESULT_STATUSES.DEFEAT) {
+            } else if (status === gameResultStatuses.DEFEAT) {
                 onWin();
             }
         };
