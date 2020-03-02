@@ -2,6 +2,10 @@
 @import "../../../constants/constants";
 
 div.game-history-table-container {
+  thead {
+    font-weight: bold;
+  }
+
   table {
     width: 100%;
     border-radius: 4px;

@@ -13,18 +13,23 @@ import GamePromise from '../gamePromise/GamePromise';
 import userStatuses from '../../constants/userStatuses';
 import GameHistoryTable from './gameHistoryTable/GameHistoryTable';
 
+const START_STATE = {
+    user: undefined,
+    loading: false,
+    imgLoading: false,
+    gameHistory: false,
+    gameHistoryLoading: false,
+    canEdit: false,
+    editMode: false,
+    challenge: false
+};
+
 class Profile extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            user: {},
-            loading: false,
-            imgLoading: false,
-            gameHistoryLoading: false,
-            canEdit: false
-        }
+        this.state = START_STATE;
     }
 
     componentDidMount() {
@@ -33,7 +38,7 @@ class Profile extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
-            this.setUser();
+            this.setState({...START_STATE}, this.setUser);
         }
     }
 
@@ -88,6 +93,9 @@ class Profile extends React.Component {
 
     render() {
         const user = this.state.user;
+        if (!user) {
+            return <></>;
+        }
         const challengePossible = user.id !== this.context.currentUser.id && user.status === userStatuses.ONLINE;
         const formFields = {
             name: {
