@@ -74,6 +74,16 @@ const onUserUpdate = (uid, callback) => {
     return () => ref.off('value', fullCallback);
 };
 
+const getUserHistory = uid =>
+    firebaseApp
+        .database()
+        .ref(`histories/${uid}`)
+        .once('value')
+        .then(histories => histories.val() && Object.entries(histories.val()).map(([date, value]) => ({
+            ...value,
+            date
+        })));
+
 export default {
     create,
     update,
@@ -81,4 +91,5 @@ export default {
     onUserUpdate,
     onAllUsersUpdate,
     getUser,
+    getUserHistory
 }

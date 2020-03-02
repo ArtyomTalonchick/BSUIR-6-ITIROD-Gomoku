@@ -11,6 +11,7 @@ import Popup from '../popup/Popup';
 import UserStatusLabel from '../userStatusLabel/UserStatusLabel';
 import GamePromise from '../gamePromise/GamePromise';
 import userStatuses from '../../constants/userStatuses';
+import GameHistoryTable from './gameHistoryTable/GameHistoryTable';
 
 class Profile extends React.Component {
 
@@ -21,25 +22,26 @@ class Profile extends React.Component {
             user: {},
             loading: false,
             imgLoading: false,
+            gameHistoryLoading: false,
             canEdit: false
         }
     }
 
     componentDidMount() {
-        this.updateUser();
+        this.setUser();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
-            this.updateUser();
+            this.setUser();
         }
     }
 
     componentWillUnmount() {
-        // this.detachListener && this.detachListener();
+        this.detachListener && this.detachListener();
     }
 
-    updateUser = () => {
+    setUser = () => {
         this.currentUser = this.context.currentUser;
         const id = this.props.match.params.id;
         if (!id || id === this.currentUser?.id) {
@@ -48,6 +50,12 @@ class Profile extends React.Component {
             this.setState({loading: true});
             this.detachListener = userServices.onUserUpdate(id, this.onUserUpdate);
         }
+    };
+
+    setHistory = () => {
+        this.setState({gameHistoryLoading: true});
+        userServices.getUserHistory(this.state.user.id).then(gameHistory =>
+            this.setState({gameHistory, gameHistoryLoading: false}));
     };
 
     onUserUpdate = user => {
@@ -123,6 +131,17 @@ class Profile extends React.Component {
                             <div className='name'>
                                 {user.name}
                                 {this.state.canEdit && <i className='fa fa-edit' onClick={this.onEditMode}/>}
+                            </div>
+                            <div className='history-block'>
+                                {this.state.gameHistoryLoading && <Loader/>}
+                                {!this.state.gameHistory && !this.state.gameHistoryLoading &&
+                                <button className='secondary' onClick={this.setHistory}>
+                                    Show history
+                                </button>
+                                }
+                                {this.state.gameHistory &&
+                                <GameHistoryTable games={this.state.gameHistory}/>
+                                }
                             </div>
                         </div>
                     </>

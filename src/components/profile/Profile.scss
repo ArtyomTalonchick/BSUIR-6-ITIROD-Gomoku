@@ -42,6 +42,7 @@ div.profile-container {
 
   div.right-block {
     flex-grow: 1;
+    width: 100%;
 
     div.name {
       display: flex;
@@ -67,6 +68,10 @@ div.profile-container {
       text-align: center;
     }
 
+    div.history-block {
+      margin-top: 20px;
+      text-align: center;
+    }
   }
 
 
