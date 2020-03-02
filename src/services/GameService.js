@@ -1,5 +1,6 @@
 import firebaseApp from '../firebaseApp';
 import gameResultStatuses from '../constants/gameResultStatuses';
+import userServices from './userServices';
 
 const GAME_REQUEST_STATUSES = {
     WAIT: 'WAIT',
@@ -40,20 +41,16 @@ export default class {
         firebaseApp.database().ref(`users/${this.userId}/games`).remove();
         this.getGameResultRef(this.opponentId).once('value', result => {
             if (!result.val()) {
-                this.registerDefeat();
+                this.registerDefeat()
+                    .then(this.clearFields);
+            } else {
+                this.clearFields();
             }
         });
-        this.userId = undefined;
-        this.opponentId = undefined;
-        this.gameId = undefined;
-        this.detachMoveListener && this.detachMoveListener();
-        this.detachDefeatListener && this.detachDefeatListener();
     };
 
     static cancelGameRequest = (userId, opponentId) => {
-        this.userId = undefined;
-        this.opponentId = undefined;
-        this.gameId = undefined;
+        this.clearFields();
         return this.updateGameRequestStatus(opponentId, userId, GAME_REQUEST_STATUSES.REFUSE)
             .then(() => this.updateGameRequestStatus(userId, opponentId, GAME_REQUEST_STATUSES.REFUSE));
     };
@@ -69,11 +66,22 @@ export default class {
 
     static newMove = (x, y) => this.updateGameRequestStatus(this.opponentId, this.userId, `${x}-${y}`);
 
-    static registerWin = () =>
-        this.getGameResultRef(this.userId).set({opponentId: this.opponentId, status: gameResultStatuses.WIN});
+    static registerResult = status => {
 
-    static registerDefeat = () =>
-        this.getGameResultRef(this.userId).set({opponentId: this.opponentId, status: gameResultStatuses.DEFEAT});
+        return userServices.getUser(this.opponentId)
+            .then(opponent =>
+                this.getGameResultRef(this.userId).set({
+                    opponentId: this.opponentId,
+                    opponentName: opponent.name,
+                    status
+                })
+            );
+    };
+
+
+    static registerWin = () => this.registerResult(gameResultStatuses.WIN);
+
+    static registerDefeat = () => this.registerResult(gameResultStatuses.DEFEAT);
 
     static onGameRequestStatusUpdate = (opponentId, id, acceptCallback, refuseCallback) => {
         const fullCallback = response => {
@@ -146,4 +154,12 @@ export default class {
         ref.on('value', fullCallback);
         this.detachDefeatListener = () => ref.off('value', fullCallback);
     };
+
+    static clearFields = () => {
+        this.userId = undefined;
+        this.opponentId = undefined;
+        this.gameId = undefined;
+        this.detachMoveListener && this.detachMoveListener();
+        this.detachDefeatListener && this.detachDefeatListener();
+    }
 }
