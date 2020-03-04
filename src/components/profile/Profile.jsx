@@ -36,8 +36,10 @@ export default class Profile extends React.Component {
         this.setUser();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (RouteHelper.getParameterFromLocation('id') !== this.id) {
+    componentDidUpdate() {
+        const isNewUser = RouteHelper.getParameterFromLocation('id') !== this.id;
+        const currentUserChanged = this.state.user?.id === this.context.currentUser.id && this.state.user !== this.context.currentUser;
+        if (isNewUser || currentUserChanged) {
             this.setState({...START_STATE}, this.setUser);
         }
     }

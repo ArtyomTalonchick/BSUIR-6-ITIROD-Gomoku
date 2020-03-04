@@ -3,6 +3,7 @@
 
 div.header-container {
   div.main-row {
+    z-index: 1;
     position: fixed;
     top: 0;
     left: 0;
@@ -52,6 +53,7 @@ div.header-container {
   }
 
   div.moving-bar {
+    z-index: 1;
     background: $primary;
     position: fixed;
     top: $headerHeight;
