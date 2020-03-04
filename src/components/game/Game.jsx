@@ -1,7 +1,7 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import './Game.scss';
+import RouteHelper from '../router/RouteHelper';
 import GameService from '../../services/GameService';
 import {AuthContext} from '../AuthProvider';
 import Canvas from './canvas/Canvas';
@@ -9,12 +9,12 @@ import {COLORS} from './canvas/constants';
 import Alert from '../alert/Alert';
 import {Routes} from '../../constants/routes';
 
-class Game extends React.Component {
+export default class Game extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.instigator = this.props.location.state?.instigator;
+        this.instigator = history.state?.instigator;
         this.pointColor = this.instigator ? COLORS.WHITE_POINT : COLORS.BLACK_POINT;
         this.opponentPointColor = this.instigator ? COLORS.BLACK_POINT : COLORS.WHITE_POINT;
 
@@ -28,7 +28,7 @@ class Game extends React.Component {
 
     componentDidMount() {
         if (!GameService.gameId) {
-            this.props.history.push(Routes.home);
+            RouteHelper.historyPush(Routes.home);
         } else {
             GameService.onNewOpponentMove(this.onNewOpponentMove);
             GameService.onChangeGameResult(this.onWin, this.onDefeat);
@@ -109,5 +109,3 @@ class Game extends React.Component {
 }
 
 Game.contextType = AuthContext;
-
-export default withRouter(Game);

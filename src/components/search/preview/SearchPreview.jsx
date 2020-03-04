@@ -1,15 +1,14 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import './SearchPreview.scss';
 import {Routes} from '../../../constants/routes';
-import RouteHelper from '../../../helpers/RouteHelper';
+import RouteHelper from '../../router/RouteHelper';
 import Image from '../../image/Image';
 import UserStatusLabel from '../../userStatusLabel/UserStatusLabel';
 
-class SearchPreview extends React.Component {
+export default class SearchPreview extends React.Component {
 
-    onUserClick = () => this.props.history.push(RouteHelper.build(Routes.profile, {id: this.props.user.id}));
+    onUserClick = () => RouteHelper.historyPush(Routes.profile, {id: this.props.user.id});
 
     render() {
         const user = this.props.user;
@@ -39,4 +38,3 @@ class SearchPreview extends React.Component {
     }
 }
 
-export default withRouter(SearchPreview)

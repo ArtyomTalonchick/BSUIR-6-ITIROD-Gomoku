@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link} from '../router/router';
 
 import Form from '../form/Form';
 import {Routes} from '../../constants/routes';

@@ -1,7 +1,7 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import './Profile.scss';
+import RouteHelper from '../router/RouteHelper';
 import Form from '../form/Form';
 import userServices from '../../services/userServices';
 import Loader from '../loader/Loader';
@@ -24,7 +24,7 @@ const START_STATE = {
     challenge: false
 };
 
-class Profile extends React.Component {
+export default class Profile extends React.Component {
 
     constructor(props) {
         super(props);
@@ -37,7 +37,7 @@ class Profile extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.match.params.id !== this.props.match.params.id) {
+        if (RouteHelper.getParameterFromLocation('id') !== this.id) {
             this.setState({...START_STATE}, this.setUser);
         }
     }
@@ -48,12 +48,12 @@ class Profile extends React.Component {
 
     setUser = () => {
         this.currentUser = this.context.currentUser;
-        const id = this.props.match.params.id;
-        if (!id || id === this.currentUser?.id) {
+        this.id = RouteHelper.getParameterFromLocation('id');
+        if (!this.id || this.id === this.currentUser?.id) {
             this.setState({user: this.currentUser, loading: false, canEdit: true});
         } else {
             this.setState({loading: true});
-            this.detachListener = userServices.onUserUpdate(id, this.onUserUpdate);
+            this.detachListener = userServices.onUserUpdate(this.id, this.onUserUpdate);
         }
     };
 
@@ -171,5 +171,3 @@ class Profile extends React.Component {
 }
 
 Profile.contextType = AuthContext;
-
-export default withRouter(Profile)

@@ -1,13 +1,13 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
+import RouteHelper from '../router/RouteHelper';
 import {AuthContext} from '../AuthProvider';
 import Alert from '../alert/Alert';
 import GameService from '../../services/GameService';
 import Loader from '../loader/Loader';
 import {Routes} from '../../constants/routes';
 
-class GamePromise extends React.Component {
+export default class GamePromise extends React.Component {
 
     constructor(props) {
         super(props);
@@ -40,11 +40,7 @@ class GamePromise extends React.Component {
         }
     };
 
-    onAccept = () =>
-        this.props.history.push({
-            pathname: Routes.game,
-            state: {instigator: true}
-        });
+    onAccept = () => RouteHelper.historyPush(Routes.game, null, {instigator: true});
 
 
     onRefuse = () => {
@@ -89,5 +85,3 @@ class GamePromise extends React.Component {
 }
 
 GamePromise.contextType = AuthContext;
-
-export default withRouter(GamePromise);

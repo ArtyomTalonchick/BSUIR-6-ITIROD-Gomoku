@@ -1,14 +1,13 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import './GameHistoryTable.scss';
+import RouteHelper from '../../router/RouteHelper';
 import {statusesSettings} from '../../../constants/gameResultStatuses';
-import RouteHelper from '../../../helpers/RouteHelper';
 import {Routes} from '../../../constants/routes';
 
-class GameHistoryTable extends React.Component {
+export default class GameHistoryTable extends React.Component {
 
-    onRowClick = game => this.props.history.push(RouteHelper.build(Routes.profile, {id: game.opponentId}));
+    onRowClick = game => RouteHelper.historyPush(Routes.profile, {id: game.opponentId});
 
     render() {
         const dateFormatter = new Intl.DateTimeFormat('ru', {
@@ -53,5 +52,3 @@ class GameHistoryTable extends React.Component {
         );
     }
 }
-
-export default withRouter(GameHistoryTable);

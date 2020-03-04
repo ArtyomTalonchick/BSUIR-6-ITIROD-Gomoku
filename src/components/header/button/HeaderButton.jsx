@@ -1,13 +1,12 @@
 import React from 'react';
-import {withRouter, Link} from 'react-router-dom';
 
 import './HeaderButton.scss';
-import RouteHelper from '../../../helpers/RouteHelper';
+import {Link} from '../../router/router';
 
-class HeaderButton extends React.Component {
+export default class HeaderButton extends React.Component {
 
     getClassName = () => {
-        const pressed = RouteHelper.compare(this.props.route, this.props.location.pathname);
+        const pressed = this.props.route === location.pathname;
         return 'header-button-container' + (pressed ? ' pressed' : '');
     };
 
@@ -16,12 +15,10 @@ class HeaderButton extends React.Component {
         return (
             <Link
                 className={this.getClassName()}
-                to={RouteHelper.build(this.props.route)}
+                to={this.props.route}
             >
                 {this.props.children}
             </Link>
         );
     }
 }
-
-export default withRouter(HeaderButton)

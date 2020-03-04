@@ -2,7 +2,7 @@ export const Routes = {
     home: '',
     registration: '/registration',
     login: '/login',
-    profile: '/profile/:id?',
+    profile: '/profile',
     search: '/search',
     game: '/game'
 };

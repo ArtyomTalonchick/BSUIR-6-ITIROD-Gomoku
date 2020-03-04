@@ -1,7 +1,7 @@
 import React from 'react';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 
 import './App.scss';
+import Router, {Redirect} from './router/router';
 import {Routes} from '../constants/routes';
 import Header from './header/Header';
 import Profile from './profile/Profile';
@@ -18,27 +18,23 @@ export default class App extends React.Component {
         const {currentUser} = this.context;
         return (
             <div className='app-container'>
-                <BrowserRouter>
-                    {currentUser &&
-                    <>
-                        <Header/>
-                        <Switch>
-                            <Route path={Routes.profile} component={Profile}/>
-                            <Route path={Routes.search} component={Search}/>
-                            <Route path={Routes.game} component={Game}/>
-                            <Redirect to={Routes.profile}/>
-                        </Switch>
-                        <GameAlert/>
-                    </>
-                    }
-                    {currentUser === null &&
-                    <Switch>
-                        <Route path={Routes.login} component={Login}/>
-                        <Route path={Routes.registration} component={Registration}/>
-                        <Redirect to={Routes.login}/>
-                    </Switch>
-                    }
-                </BrowserRouter>
+                {currentUser &&
+                <>
+                    <Header/>
+                    <Router path={Routes.profile} component={Profile}/>
+                    <Router path={Routes.search} component={Search}/>
+                    <Router path={Routes.game} component={Game}/>
+                    <Redirect to={Routes.profile}/>
+                    <GameAlert/>
+                </>
+                }
+                {currentUser === null &&
+                <>
+                    <Router path={Routes.login} component={Login}/>
+                    <Router path={Routes.registration} component={Registration}/>
+                    <Redirect to={Routes.login}/>
+                </>
+                }
             </div>
         );
     }

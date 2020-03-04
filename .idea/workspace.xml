@@ -2,18 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09f76adf-e269-4726-ba51-21a30ef8498c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.babelrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/router/RouteHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/router/router.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/game/Game.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/game/Game.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/gameAlert/GameAlert.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/gameAlert/GameAlert.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/gamePromise/GamePromise.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/gamePromise/GamePromise.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/header/button/HeaderButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header/button/HeaderButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/profile/gameHistoryTable/GameHistoryTable.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/gameHistoryTable/GameHistoryTable.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/registration/Registration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/registration/Registration.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/search/preview/SearchPreview.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/preview/SearchPreview.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/RouteHelper.js" beforeDir="false" />
     </list>
     <list id="cad6ea4f-d675-4e6a-a9fe-3203fa03fc7a" name="ignore" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,15 +64,16 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/components" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/components/profile/gameHistoryItem" />
       <recent name="$PROJECT_DIR$/src/components/notification" />
       <recent name="$PROJECT_DIR$/src/components/header/button" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/router" />
+      <recent name="$PROJECT_DIR$/src/components" />
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
@@ -278,11 +284,11 @@
     <state x="696" y="154" width="937" height="807" key="CommitChangelistDialog2/67.27.1853.1053/283.1080.1366.768@67.27.1853.1053" timestamp="1583055925345" />
     <state x="667" y="157" width="928" height="807" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1583137564487" />
     <state x="558" y="149" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1821@67.27.1853.1821" timestamp="1582224251627" />
-    <state x="267" y="58" width="1653" height="855" key="DiffContextDialog" timestamp="1583242064152">
+    <state x="267" y="58" width="1653" height="855" key="DiffContextDialog" timestamp="1583321029750">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053/283.1080.1366.768@67.27.1853.1053" timestamp="1582464072227" />
-    <state x="267" y="58" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1583242064152" />
+    <state x="267" y="58" width="1653" height="855" key="DiffContextDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1583321029750" />
     <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1583224924816">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -333,12 +339,12 @@
     <state x="484" y="316" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1299.741@67.27.1299.741" timestamp="1582208734680" />
     <state x="662" y="438" width="454" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053/283.1080.1366.768@67.27.1853.1053" timestamp="1582901349042" />
     <state x="662" y="438" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053@67.27.1853.1053" timestamp="1583221713669" />
-    <state x="491" y="169" width="1005" height="765" key="find.popup" timestamp="1583240947832">
+    <state x="488" y="167" width="1005" height="765" key="find.popup" timestamp="1583321256379">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="364" y="127" width="704" height="538" key="find.popup/67.27.1299.741@67.27.1299.741" timestamp="1582369249513" />
     <state x="491" y="169" width="1005" height="765" key="find.popup/67.27.1853.1053/283.1080.1366.768@67.27.1853.1053" timestamp="1583056724542" />
-    <state x="491" y="169" width="1005" height="765" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1583240947832" />
+    <state x="488" y="167" width="1005" height="765" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1583321256379" />
     <state x="491" y="273" width="1005" height="1323" key="find.popup/67.27.1853.1821@67.27.1853.1821" timestamp="1582220159195" />
     <state x="738" y="183" width="501" height="738" key="refactoring.ChangeSignatureDialog" timestamp="1582793152224">
       <screen x="67" y="27" width="1853" height="1053" />

@@ -1,12 +1,12 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 import {AuthContext} from '../AuthProvider';
 import Alert from '../alert/Alert';
 import GameService from '../../services/GameService';
 import {Routes} from '../../constants/routes';
+import RouteHelper from '../router/RouteHelper';
 
-class GameAlert extends React.Component {
+export default class GameAlert extends React.Component {
 
     constructor(props) {
         super(props);
@@ -30,7 +30,7 @@ class GameAlert extends React.Component {
 
     onAccept = () => {
         GameService.acceptGameRequest(this.context.currentUser.id, this.state.opponentId)
-            .then(() => this.props.history.push({pathname: Routes.game, state: {instigator: false}}));
+            .then(() => RouteHelper.historyPush(Routes.game, null, {instigator: false}));
     };
 
     onRefuse = () => {
@@ -62,5 +62,3 @@ class GameAlert extends React.Component {
 }
 
 GameAlert.contextType = AuthContext;
-
-export default withRouter(GameAlert);
