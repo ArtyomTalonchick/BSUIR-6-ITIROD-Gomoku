@@ -2,9 +2,6 @@
 @import "../../../constants/constants";
 
 div.game-history-table-container {
-  thead {
-    font-weight: bold;
-  }
 
   table {
     width: 100%;
@@ -16,29 +13,37 @@ div.game-history-table-container {
       border-radius: 10px;
       border-bottom: 1px solid $grayLight;
 
-      &:hover {
-        cursor: pointer;
-        background: $grayLight;
-      }
-
-      td {
+      td, th {
         padding: 16px;
+      }
+    }
 
-
-        &.win {
-          color: #00C853;
+    tbody {
+      tr {
+        &:hover {
+          cursor: pointer;
+          background: $grayLight;
         }
 
-        &.defeat {
-          color: #D50000;
+        td {
+          &.win {
+            color: #00C853;
+          }
+
+          &.defeat {
+            color: #D50000;
+          }
+
+          &.draw {
+            color: #FFD600;;
+          }
+
         }
 
-        &.draw {
-          color: #FFD600;;
-        }
       }
 
     }
+
   }
 
 }

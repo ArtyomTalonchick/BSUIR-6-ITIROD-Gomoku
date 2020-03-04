@@ -79,10 +79,8 @@ const getUserHistory = uid =>
         .database()
         .ref(`histories/${uid}`)
         .once('value')
-        .then(histories => histories.val() && Object.entries(histories.val()).map(([date, value]) => ({
-            ...value,
-            date
-        })));
+        .then(histories =>
+            histories.val() ? Object.entries(histories.val()).map(([date, value]) => ({...value, date})) : []);
 
 export default {
     create,

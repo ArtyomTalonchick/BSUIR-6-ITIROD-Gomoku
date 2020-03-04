@@ -21,15 +21,15 @@ export default class GameHistoryTable extends React.Component {
                 <table>
                     <thead>
                     <tr>
-                        <td>
+                        <th>
                             Result
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Date
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Opponent
-                        </td>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +46,13 @@ export default class GameHistoryTable extends React.Component {
                             </td>
                         </tr>
                     )}
+                    {this.props.games.length === 0 &&
+                    <tr>
+                        <td colSpan={3}>
+                            Game history is empty
+                        </td>
+                    </tr>
+                    }
                     </tbody>
                 </table>
             </div>
