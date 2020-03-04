@@ -2,9 +2,9 @@ import React from 'react';
 
 import './Header.scss';
 import {Routes} from '../../constants/routes';
-import HeaderButton from './button/HeaderButton';
 import authenticationServices from '../../services/authenticationServices';
 import MainLabel from '../../images/MainLabel.png'
+import {Link} from "../router/router";
 
 export default class Header extends React.Component {
 
@@ -36,12 +36,12 @@ export default class Header extends React.Component {
 
     buttons =
         <>
-            <HeaderButton route={Routes.search}>
+            <Link className='header-button-container' to={Routes.search}>
                 Search
-            </HeaderButton>
-            <HeaderButton route={Routes.profile}>
+            </Link>
+            <Link className='header-button-container' to={Routes.profile}>
                 My Profile
-            </HeaderButton>
+            </Link>
         </>;
 
     render() {
